@@ -57,11 +57,12 @@ class BlocCubit extends Cubit<BlocState> {
   }
 
   void getMenClothing(){
-    DioHelper.getData(url: "products/category/men'sclothing", query: {} ).then((value) {
+    DioHelper.getData(url: "products/category/men's clothing", query: {} ).then((value) {
       _MenClothing=value.data;
       for(int i = 0 ; i < _MenClothing.length ; i++){
         menData.add(Model.fromJson(_MenClothing[i]));
       }
+      print(menData.length);
       emit(GetMenClothingDataSuccess());
     } ).catchError((error){
       print(error.toString());
@@ -70,7 +71,7 @@ class BlocCubit extends Cubit<BlocState> {
   }
 
   void getWomenClothing(){
-    DioHelper.getData(url: "products/category/women'sclothing", query: {} ).then((value) {
+    DioHelper.getData(url: "products/category/women's clothing", query: {} ).then((value) {
       _WomenClothing=value.data;
       for(int i = 0 ; i < _WomenClothing.length ; i++) {
         womenData.add(Model.fromJson(_WomenClothing[i]));

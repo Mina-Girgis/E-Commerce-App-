@@ -15,26 +15,7 @@ class ElectronicsScreen extends StatelessWidget {
           return SingleChildScrollView(
             child: Column(
               children: [
-                Container(
-                  width: double.infinity,
-                  // color: Colors.grey,
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    // scrollDirection: Axis.vertical,
-                    physics: ScrollPhysics(),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 20,
-                      childAspectRatio: 0.6,
-
-                    ),
-                    itemCount: 6,
-                    itemBuilder: (context,index){
-                      return ProductItem(cubit.electroData[index]);
-                    },
-                  ),
-                ),
+                ScreenItems(cubit.electroData),
                 SizedBox(height: 20.0,),
               ],
             ),
