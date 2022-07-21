@@ -10,18 +10,10 @@ class ElectronicsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var cubit = BlocCubit.get(context);
     return BlocConsumer<BlocCubit, BlocState>(
-        listener: (context, state)
-    {},
-    builder: (context, state) {
-    return GridView.builder(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-    crossAxisCount: 2,
-    crossAxisSpacing: 4.0,
-    mainAxisSpacing: 4.0
-    ),
-    itemBuilder: (context,index){
-      return Text("hello");
-      });
-    });
-    
-    }
+        listener: (context, state) {},
+        builder: (context, state) {
+          return Text("ss");
+        }
+    );
   }
+}
