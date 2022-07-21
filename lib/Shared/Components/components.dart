@@ -1,4 +1,3 @@
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce/Bloc/bloc_cubit.dart';
 import 'package:e_commerce/Models/productmodel.dart';
@@ -7,9 +6,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cupertino_icons/cupertino_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+final urlImages = [
+  'https://3udno63459u23yboa6366rls-wpengine.netdna-ssl.com/wp-content/uploads/2017/05/Best-Offers-In-Ecommerce.jpg',
+  'https://3udno63459u23yboa6366rls-wpengine.netdna-ssl.com/wp-content/uploads/2017/05/Best-Offers-In-Ecommerce.jpg',
+  'https://3udno63459u23yboa6366rls-wpengine.netdna-ssl.com/wp-content/uploads/2017/05/Best-Offers-In-Ecommerce.jpg',
+  'https://thumbs.dreamstime.com/b/vector-illustration-cool-new-arrival-sticker-tag-banner-megaphone-vector-illustration-new-arrival-sticker-tag-banner-169160809.jpg',
+  'https://thumbs.dreamstime.com/b/vector-illustration-cool-new-arrival-sticker-tag-banner-megaphone-vector-illustration-new-arrival-sticker-tag-banner-169160809.jpg',
+];
+
+
+
+
 Widget CategoriesTitle(String s, int index, context) {
   int num = BlocCubit.get(context).titleIndex;
-
   return BlocConsumer<BlocCubit, BlocState>(
     listener: (context, state) {},
     builder: (context, state) {
@@ -20,7 +29,7 @@ Widget CategoriesTitle(String s, int index, context) {
           style: TextStyle(
             fontSize: 20.0,
             color: num == index
-                ? Colors.orange
+                ? Colors.deepOrange
                 : const Color.fromRGBO(149, 149, 149, 1.0),
           ),
         ),
@@ -35,7 +44,10 @@ Widget ProductItem(Model model) {
     height: 310,
     decoration: BoxDecoration(
       //color:Color.fromRGBO(231, 231, 231, 1.0),
-      border: Border.all(width: 1.0),
+      border: Border.all(
+          width: 1.0 ,
+          color: Colors.grey,
+        ),
       borderRadius: BorderRadius.circular(15.0),
     ),
     child: Column(
@@ -67,7 +79,10 @@ Widget ProductItem(Model model) {
             model.title,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 18.0),
+            style: TextStyle(
+                fontSize: 18.0,
+                color: Colors.blueGrey[400],
+            ),
           ),
         ),
         Padding(
@@ -79,9 +94,9 @@ Widget ProductItem(Model model) {
                 child: Text(
                   "\$ ${model.price}",
                   maxLines: 2,
-                  //overflow: TextOverflow.ellipsis,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                      fontSize: 20.0,
+                      fontSize: 20,
                       color: Colors.deepOrange,
                       fontWeight: FontWeight.bold),
                 ),
@@ -92,7 +107,7 @@ Widget ProductItem(Model model) {
                 },
                 icon: const Icon(FontAwesomeIcons.heart,),
                 // icon heartCircleCheck
-                iconSize: 25.0,
+                iconSize: 26.0,
               )
             ],
           ),
@@ -101,14 +116,6 @@ Widget ProductItem(Model model) {
     ),
   );
 }
-
-final urlImages = [
-  'https://3udno63459u23yboa6366rls-wpengine.netdna-ssl.com/wp-content/uploads/2017/05/Best-Offers-In-Ecommerce.jpg',
-  'https://3udno63459u23yboa6366rls-wpengine.netdna-ssl.com/wp-content/uploads/2017/05/Best-Offers-In-Ecommerce.jpg',
-  'https://3udno63459u23yboa6366rls-wpengine.netdna-ssl.com/wp-content/uploads/2017/05/Best-Offers-In-Ecommerce.jpg',
-  'https://thumbs.dreamstime.com/b/vector-illustration-cool-new-arrival-sticker-tag-banner-megaphone-vector-illustration-new-arrival-sticker-tag-banner-169160809.jpg',
-  'https://thumbs.dreamstime.com/b/vector-illustration-cool-new-arrival-sticker-tag-banner-megaphone-vector-illustration-new-arrival-sticker-tag-banner-169160809.jpg',
-];
 
 Widget Sliderrr() {
   return CarouselSlider.builder(
@@ -121,7 +128,8 @@ Widget Sliderrr() {
       itemBuilder: (context, index, realIndex) {
         final urlImage = urlImages[index];
         return buildImage(urlImage, index);
-      });
+      }
+      );
 }
 
 Widget buildImage(String urlImage, int index) {
@@ -134,6 +142,33 @@ Widget buildImage(String urlImage, int index) {
     child: Image.network(
       urlImage,
       fit: BoxFit.cover,
+    ),
+  );
+}
+
+Widget ScreenItems(List<Model>model){
+  return Container(
+    width: double.infinity,
+    // color: Colors.grey,
+    child: GridView.builder(
+      shrinkWrap: true,
+      // scrollDirection: Axis.vertical,
+      physics: ScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 20,
+        crossAxisSpacing: 20,
+        childAspectRatio: 0.65,
+      ),
+      itemCount: model.length,
+      itemBuilder: (context,index){
+        return InkWell(
+            onTap: (){
+              print(model[index].title);
+            },
+            child: ProductItem(model[index])
+        );
+      },
     ),
   );
 }

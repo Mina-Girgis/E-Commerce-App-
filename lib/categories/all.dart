@@ -16,7 +16,7 @@ class AllScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(decoration: BoxDecoration(
-              border: Border.all(width: 1),
+              // border: Border.all(width: 0,color: Colors.grey,),
               borderRadius: BorderRadius.circular(10)
             ),
               child: Sliderrr(),

@@ -12,8 +12,14 @@ class ElectronicsScreen extends StatelessWidget {
     return BlocConsumer<BlocCubit, BlocState>(
         listener: (context, state) {},
         builder: (context, state) {
-          return Text("ss");
-        }
-    );
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                ScreenItems(cubit.electroData),
+                SizedBox(height: 20.0,),
+              ],
+            ),
+          );
+        });
   }
 }
