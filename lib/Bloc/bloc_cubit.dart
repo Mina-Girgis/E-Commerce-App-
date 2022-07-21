@@ -27,6 +27,8 @@ class BlocCubit extends Cubit<BlocState> {
   List<Model>jeweleryData=[];
   List<Model>electroData=[];
 
+
+
   void getAll(){
     DioHelper.getData(url: "products", query: {} ).then((value) {
       _AllData=value.data;
