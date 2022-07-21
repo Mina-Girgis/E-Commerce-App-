@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 #Thu Jul 21 13:18:20 EET 2022
 base.0=D\:\\E-Commerce-App--master\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+=======
+#Wed Jul 20 17:34:27 EET 2022
+base.0=C\:\\Users\\DC User\\StudioProjects\\E-commerce\\E-Commerce-App-\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+>>>>>>> b2cd8d1fc1e992812ddc20aa1321658d2777c6b8
 renamed.0=classes.dex
 path.0=classes.dex
