@@ -97,8 +97,8 @@ Widget ProductItem(Model model) {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       fontSize: 20,
-                      color: Colors.deepOrange,
-                      fontWeight: FontWeight.bold),
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500),
                 ),
               ),
               IconButton(
