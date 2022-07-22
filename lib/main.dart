@@ -29,6 +29,7 @@ class Myapp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
+              fontFamily: 'BreeSerif',
               appBarTheme: const AppBarTheme(
                   backgroundColor: Color.fromRGBO(255, 255, 255, 1.0),
                   elevation: 0.0,
@@ -53,6 +54,6 @@ class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return RegisterScreen();
+    return HomeScreen();
   }
 }
