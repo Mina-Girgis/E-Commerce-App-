@@ -7,6 +7,7 @@ import 'Bloc/bloc_cubit.dart';
 import 'Screens/homescreen.dart';
 import 'Screens/login.dart';
 import 'Screens/register.dart';
+import 'Screens/productinfo.dart';
 import 'Screens/start_screen.dart';
 
 
