@@ -10,27 +10,28 @@ class BlocCubit extends Cubit<BlocState> {
   static BlocCubit get(context)=> BlocProvider.of(context);
   int titleIndex = 0 ;
 
-  void ChangeTitleIndex(int index){
-    titleIndex = index;
-    emit(CatTitleColor());
-  }
-
   List <dynamic> _AllData=[];
   List <dynamic> _Electronics=[];
   List <dynamic> _MenClothing=[];
   List <dynamic> _WomenClothing=[];
   List <dynamic> _Jewelery=[];
+  Map<dynamic,dynamic> _SpecificProduct={};
 
   List<Model>allData=[];
   List<Model>menData=[];
   List<Model>womenData=[];
   List<Model>jeweleryData=[];
   List<Model>electroData=[];
+  List<Model>SpecificProductData = [];
+  Model model = Model();
 
-
+  void ChangeTitleIndex(int index){
+    titleIndex = index;
+    emit(CatTitleColor());
+  }
 
   void getAll(){
-    DioHelper.getData(url: "products", query: {} ).then((value) {
+    DioHelper.getData(url: "products", query: {"sort":"asc"} ).then((value) {
       _AllData=value.data;
       for(int i = 0 ; i < _AllData.length ; i++){
         allData.add(Model.fromJson(_AllData[i]));
@@ -42,9 +43,8 @@ class BlocCubit extends Cubit<BlocState> {
     });
   }
 
-
   void getElectronics(){
-    DioHelper.getData(url: "products/category/electronics", query: {} ).then((value) {
+    DioHelper.getData(url: "products/category/electronics", query: {"sort":"asc"} ).then((value) {
       _Electronics=value.data;
       for(int i = 0 ; i < _Electronics.length ; i++){
         electroData.add(Model.fromJson(_Electronics[i]));
@@ -57,7 +57,7 @@ class BlocCubit extends Cubit<BlocState> {
   }
 
   void getMenClothing(){
-    DioHelper.getData(url: "products/category/men's clothing", query: {} ).then((value) {
+    DioHelper.getData(url: "products/category/men's clothing", query: {"sort":"asc"} ).then((value) {
       _MenClothing=value.data;
       for(int i = 0 ; i < _MenClothing.length ; i++){
         menData.add(Model.fromJson(_MenClothing[i]));
@@ -71,7 +71,7 @@ class BlocCubit extends Cubit<BlocState> {
   }
 
   void getWomenClothing(){
-    DioHelper.getData(url: "products/category/women's clothing", query: {} ).then((value) {
+    DioHelper.getData(url: "products/category/women's clothing", query: {"sort":"asc"} ).then((value) {
       _WomenClothing=value.data;
       for(int i = 0 ; i < _WomenClothing.length ; i++) {
         womenData.add(Model.fromJson(_WomenClothing[i]));
@@ -84,7 +84,7 @@ class BlocCubit extends Cubit<BlocState> {
   }
 
   void getJewelery(){
-    DioHelper.getData(url: "products/category/jewelery", query: {} ).then((value) {
+    DioHelper.getData(url: "products/category/jewelery", query: {"sort":"asc"} ).then((value) {
       _Jewelery=value.data;
       for(int i = 0 ; i < _Jewelery.length ; i++) {
         jeweleryData.add(Model.fromJson(_Jewelery[i]));
@@ -94,6 +94,20 @@ class BlocCubit extends Cubit<BlocState> {
       print(error.toString());
       emit(GetJeweleryDataFail());
     });
+  }
+
+  Model getSpecificItem(int id){
+    // BinarySearch log(n)
+    int start=0;
+    int end = allData.length-1;
+    while(start<=end){
+      int mid = ((start+end)/2).toInt();
+      if(allData[mid].id < id) start=mid+1;
+      else if(allData[mid].id > id)end=mid-1;
+      else return allData[mid];
+    }
+    emit(GetSpecificProductDataFail());
+    return model;
   }
 
 

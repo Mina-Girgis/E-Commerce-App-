@@ -1,5 +1,4 @@
 import 'package:e_commerce/Bloc/bloc_cubit.dart';
-import 'package:e_commerce/Models/productmodel.dart';
 import 'package:e_commerce/Shared/Components/components.dart';
 import 'package:e_commerce/categories/all.dart';
 import 'package:e_commerce/categories/electronicsscreen.dart';
@@ -8,6 +7,9 @@ import 'package:e_commerce/categories/mensclothingscreen.dart';
 import 'package:e_commerce/categories/womensclothingscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'side_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -35,6 +37,7 @@ class HomeScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
+          drawer: SideBar(),
           appBar: AppBar(
             title: const Text(
               "Zoba",
@@ -47,10 +50,9 @@ class HomeScreen extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.seventeen_mp_outlined),
+                icon: const Icon(FontAwesomeIcons.bagShopping),
               )
             ],
-            leading: const Icon(Icons.menu),
           ),
           body: Padding(
             padding: const EdgeInsets.only(left: 20.0, right: 20),
@@ -93,11 +95,13 @@ class HomeScreen extends StatelessWidget {
                               onTap: () {
                                 cubit.ChangeTitleIndex(index);
                               },
-                              child:
-                                  CategoriesTitle(titles[index], index, context));
+                              child: CategoriesTitle(
+                                  titles[index], index, context));
                         }),
                   ),
-                  const SizedBox(height: 20,),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   screens[cubit.titleIndex],
                 ],
               ),

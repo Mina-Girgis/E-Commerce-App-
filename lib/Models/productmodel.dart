@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart';
 
 class Model {
-  dynamic? title;
-  dynamic? id;
-  dynamic? price;
-  dynamic? description;
-  dynamic? category;
-  dynamic? image;
-  dynamic? rate;
-  dynamic? countRate;
+  dynamic title;
+  dynamic id;
+  dynamic price;
+  dynamic description;
+  dynamic category;
+  dynamic image;
+  dynamic rate;
+  dynamic countRate;
 
   Model({this.image,this.title,this.category,this.countRate,this.id,this.price,this.rate,this.description});
 
