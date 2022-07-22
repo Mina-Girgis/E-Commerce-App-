@@ -45,7 +45,7 @@ Widget ProductItem(Model model) {
     decoration: BoxDecoration(
       //color:Color.fromRGBO(231, 231, 231, 1.0),
       border: Border.all(
-          width: 1.0 ,
+          width: 1 ,
           color: Colors.grey,
         ),
       borderRadius: BorderRadius.circular(15.0),

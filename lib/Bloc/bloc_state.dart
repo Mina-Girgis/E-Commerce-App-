@@ -30,4 +30,8 @@ class GetJeweleryDataSuccess extends BlocState {}
 class GetJeweleryDataFail extends BlocState {}
 
 
+class GetSpecificProductDataSuccess extends BlocState {}
+class GetSpecificProductDataFail extends BlocState {}
+
+
 

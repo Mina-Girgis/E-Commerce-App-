@@ -1,8 +1,10 @@
 import 'package:e_commerce/Bloc/bloc_cubit.dart';
+import 'package:e_commerce/Models/productmodel.dart';
 import 'package:e_commerce/Screens/productinfo.dart';
 import 'package:e_commerce/Shared/Components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AllScreen extends StatelessWidget {
   const AllScreen({Key? key}) : super(key: key);
@@ -25,10 +27,20 @@ class AllScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            const Text("All Products",
-              style: TextStyle(fontWeight: FontWeight.w500,
-              fontSize: 20,
-              color: Colors.deepOrange),),
+            Row(
+              children: [
+                Expanded(
+                  child: const Text("All Products",
+                    style: TextStyle(fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                    color: Colors.deepOrange),),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Icon(FontAwesomeIcons.angleRight),
+                ),
+              ],
+            ),
             const SizedBox(
               height: 10,
             ),
@@ -52,10 +64,20 @@ class AllScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            const Text("Best Seller",
-              style: TextStyle(fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                  color: Colors.deepOrange),),
+            Row(
+              children: [
+                Expanded(
+                  child: const Text("Best Seller",
+                    style: TextStyle(fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                        color: Colors.deepOrange),),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Icon(FontAwesomeIcons.angleRight),
+                ),
+              ],
+            ),
             const SizedBox(
               height: 10,
             ),
@@ -68,8 +90,14 @@ class AllScreen extends StatelessWidget {
                   return SizedBox(width: 20,);
                 },
                 itemCount: 20,
-                itemBuilder: (context, index) {
-                  return ProductItem(cubit.allData[index]);
+                itemBuilder: (context,int index) {
+                  return InkWell(
+                    onTap: (){
+                      Model model = cubit.getSpecificItem(cubit.allData[index].id);
+                      print(model.title);
+                    },
+                    child: ProductItem(cubit.allData[index]),
+                  );
                 },
               ),
             ),
