@@ -1,4 +1,5 @@
 import 'package:e_commerce/Bloc/bloc_cubit.dart';
+import 'package:e_commerce/Screens/productinfo.dart';
 import 'package:e_commerce/Shared/Components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,7 +42,10 @@ class AllScreen extends StatelessWidget {
                 },
                 itemCount: 20,
                 itemBuilder: (context, index) {
-                  return ProductItem(cubit.allData[index]);
+                  return InkWell(onTap: (){
+                    Navigator.push(context,MaterialPageRoute(builder: (context) =>  ProductInfo(model: cubit.allData[index],)));
+                  },
+                      child: ProductItem(cubit.allData[index]));
                 },
               ),
             ),

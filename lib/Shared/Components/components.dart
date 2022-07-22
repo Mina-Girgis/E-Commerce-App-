@@ -95,9 +95,9 @@ Widget ProductItem(Model model) {
                   "\$ ${model.price}",
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 20,
-                      color: Colors.white,
+                      color: Colors.deepOrange,
                       fontWeight: FontWeight.w500),
                 ),
               ),
