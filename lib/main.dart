@@ -8,11 +8,15 @@ import 'Screens/homescreen.dart';
 import 'Screens/login.dart';
 import 'Screens/register.dart';
 import 'Screens/productinfo.dart';
+import 'Screens/showdialouge.dart';
 import 'Screens/start_screen.dart';
+import 'Shared/Components/Network/Local/user_database.dart';
 
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
+  UsersDatabase.createDatabase();
   runApp(const Myapp());
 }
 
@@ -54,6 +58,6 @@ class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return HomeScreen();
+    return LoginScreen();
   }
 }

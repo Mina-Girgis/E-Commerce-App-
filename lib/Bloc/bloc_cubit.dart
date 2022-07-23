@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce/Models/productmodel.dart';
+import 'package:e_commerce/Models/usermodel.dart';
+import 'package:e_commerce/Shared/Components/Network/Local/user_database.dart';
 import 'package:e_commerce/Shared/Components/Network/Remote/diohelper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
@@ -10,6 +12,7 @@ class BlocCubit extends Cubit<BlocState> {
   static BlocCubit get(context)=> BlocProvider.of(context);
   int titleIndex = 0 ;
 
+  List<User> users= UsersDatabase.userData;
   List <dynamic> _AllData=[];
   List <dynamic> _Electronics=[];
   List <dynamic> _MenClothing=[];
