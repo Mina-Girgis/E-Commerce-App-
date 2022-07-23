@@ -1,4 +1,5 @@
 import 'package:e_commerce/Models/usermodel.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite/sqflite.dart';
 
 class UsersDatabase {
@@ -87,13 +88,14 @@ class UsersDatabase {
     userData.clear();
   }
 
-  static bool validData({required String password ,required String mail }) {
+  static int validData({required String password ,required String mail }) {
     // validData for login screen
-    bool valid = false;
+    int valid = -1;
     List.generate(userData.length, (index) {
       if (userData[index].password == password &&
           userData[index].mail == mail) {
-        valid = true;
+        print("good");
+        valid = int.parse(userData[index].id);
       }
     });
     return valid;
