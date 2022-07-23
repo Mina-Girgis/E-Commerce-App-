@@ -33,5 +33,8 @@ class GetJeweleryDataFail extends BlocState {}
 class GetSpecificProductDataSuccess extends BlocState {}
 class GetSpecificProductDataFail extends BlocState {}
 
+class ChangeCurrentUserIdSuccess extends BlocState {}
+
+
 
 

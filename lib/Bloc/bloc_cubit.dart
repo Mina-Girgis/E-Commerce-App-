@@ -12,6 +12,8 @@ class BlocCubit extends Cubit<BlocState> {
   static BlocCubit get(context)=> BlocProvider.of(context);
   int titleIndex = 0 ;
 
+  dynamic currentUserId=0;
+
   List<User> users= UsersDatabase.userData;
   List <dynamic> _AllData=[];
   List <dynamic> _Electronics=[];
@@ -31,6 +33,11 @@ class BlocCubit extends Cubit<BlocState> {
   void ChangeTitleIndex(int index){
     titleIndex = index;
     emit(CatTitleColor());
+  }
+
+  void ChangeCurrentUserId(int index){
+    currentUserId=index;
+    emit(ChangeCurrentUserIdSuccess());
   }
 
   void getAll(){
@@ -107,7 +114,10 @@ class BlocCubit extends Cubit<BlocState> {
       int mid = ((start+end)/2).toInt();
       if(allData[mid].id < id) start=mid+1;
       else if(allData[mid].id > id)end=mid-1;
-      else return allData[mid];
+      else {
+        emit(GetSpecificProductDataSuccess());
+        return allData[mid];
+      }
     }
     emit(GetSpecificProductDataFail());
     return model;
