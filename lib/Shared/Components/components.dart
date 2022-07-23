@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce/Bloc/bloc_cubit.dart';
 import 'package:e_commerce/Models/productmodel.dart';
+import 'package:e_commerce/Screens/productinfo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cupertino_icons/cupertino_icons.dart';
@@ -164,7 +165,7 @@ Widget ScreenItems(List<Model>model){
       itemBuilder: (context,index){
         return InkWell(
             onTap: (){
-              print(model[index].title);
+              Navigator.push(context,MaterialPageRoute(builder: (context) =>  ProductInfo(model: model[index],)));
             },
             child: ProductItem(model[index])
         );

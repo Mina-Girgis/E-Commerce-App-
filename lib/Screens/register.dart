@@ -1,20 +1,32 @@
+import 'package:e_commerce/Bloc/bloc_cubit.dart';
+import 'package:e_commerce/Models/usermodel.dart';
 import 'package:e_commerce/Screens/login.dart';
+import 'package:e_commerce/Screens/showdialouge.dart';
+import 'package:e_commerce/Shared/Components/Network/Local/user_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
 
   var formKey = GlobalKey<FormState>();
-  final EmailController    = TextEditingController();
-  final PasswordController = TextEditingController();
-  final NameController = TextEditingController();
+  TextEditingController EmailController = TextEditingController();
+  TextEditingController PasswordController = TextEditingController();
+  TextEditingController NameController = TextEditingController();
+  TextEditingController PhoneNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
-            child: Padding(
+    var cubit = BlocCubit.get(context);
+    return BlocConsumer<BlocCubit, BlocState>(
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      builder: (context, state) {
+        return Scaffold(
+          body: SingleChildScrollView(
+            child: SafeArea(
+                child: Padding(
               padding: const EdgeInsets.all(25.0),
               child: Form(
                 key: formKey,
@@ -29,10 +41,11 @@ class RegisterScreen extends StatelessWidget {
                             Text(
                               "Sign Up",
                               style: TextStyle(
-                                  fontSize: 35, ),
+                                fontSize: 35,
+                              ),
                             ),
                             SizedBox(
-                              height: 70,
+                              height: 60,
                             ),
                           ],
                         ),
@@ -42,27 +55,29 @@ class RegisterScreen extends StatelessWidget {
                       height: 20,
                     ),
                     TextFormField(
-                    controller: NameController,
-                    validator: (String?value){
-                      if(value!.isEmpty ){
-                        return "Enter valid name";
-                      }
-                    },
-                    style: const TextStyle(fontSize: 20),
-                    decoration: const InputDecoration(
-                      label: Text(
-                        "Name",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    )),
+                        controller: NameController,
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
+                            return "Enter valid name";
+                          }
+                        },
+                        style: const TextStyle(fontSize: 20),
+                        decoration: const InputDecoration(
+                          label: Text(
+                            "Name",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        )),
                     const SizedBox(
                       height: 20,
                     ),
                     TextFormField(
                         controller: EmailController,
-                        validator: (String?value){
-                          bool validEmail = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value.toString());
-                          if(value!.isEmpty || !validEmail){
+                        validator: (String? value) {
+                          bool validEmail = RegExp(
+                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                              .hasMatch(value.toString());
+                          if (value!.isEmpty || !validEmail) {
                             return "Enter valid Email";
                           }
                         },
@@ -78,11 +93,10 @@ class RegisterScreen extends StatelessWidget {
                     ),
                     TextFormField(
                         controller: PasswordController,
-                        validator: (String? value){
-                          if(value!.length == 0){
-                            return "Min length is 7";
-                          }
-                          else if(value.length < 7){
+                        validator: (String? value) {
+                          if (value!.length == 0) {
+                            return "Enter valid Password";
+                          } else if (value.length < 7) {
                             return "Enter Stronger Password";
                           }
                           return null;
@@ -97,11 +111,76 @@ class RegisterScreen extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
+                    TextFormField(
+                        controller: PhoneNumberController,
+                        validator: (String? value) {
+                          if (value!.isEmpty ||
+                              value.length < 11 ||
+                              value[0] != '0') {
+                            return "Enter valid Phone number";
+                          }
+                        },
+                        style: const TextStyle(fontSize: 20),
+                        decoration: const InputDecoration(
+                          label: Text(
+                            "Phone Number",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        )),
+                    const SizedBox(
+                      height: 30,
+                    ),
                     MaterialButton(
                       onPressed: () {
-                        if(formKey.currentState!.validate()){
-                          print(" Login Successfully ");
+                        // UsersDatabase.deleteAllData();
+                        // UsersDatabase.getData(UsersDatabase.database);
+                        print(cubit.users[0].mail);
+                        print(cubit.users[1].mail);
+                          print(cubit.users[2].mail);
+
+                        if (!UsersDatabase.isFoundInDatabase(
+                            name: NameController.value.text,
+                            mail: EmailController.value.text)) {
+                          if (formKey.currentState!.validate()) {
+                            String name = NameController.text;
+                            String email = EmailController.text;
+                            String phone = PhoneNumberController.text;
+                            String password = PasswordController.text;
+                            print(name);
+                            print(email);
+                            print(phone);
+                            print(password);
+                            UsersDatabase.insertDatabase(
+                                name: name,
+                                email: email,
+                                password: password,
+                                phoneNumber: phone,
+                                address: "");
+                            print(" Login Successfully ");
+                            // UsersDatabase.getData(UsersDatabase.database);
+                          }
                         }
+                          else{
+                            showDialog(context: context,
+                                builder: (ctx){
+                               return AlertDialog(
+                                 title: const Text("Alert Dialog Box"),
+                                 content: const Text("You have raised a Alert Dialog Box"),
+                                 actions: <Widget>[
+                                   TextButton(
+                                     onPressed: () {
+                                       Navigator.of(ctx).pop();
+                                     },
+                                     child: Container(
+                                       color: Colors.green,
+                                       padding: const EdgeInsets.all(14),
+                                       child: const Text("okay"),
+                                     ),
+                                   ),
+                                 ],
+                               ) ;
+                                });
+                          }
                         // Navigator.push(context,MaterialPageRoute(builder: (context) => const SecondRoute()),
                       },
                       child: const Text(
@@ -120,7 +199,7 @@ class RegisterScreen extends StatelessWidget {
                     const Text("Already have an account ? "),
                     FlatButton(
                         onPressed: () {
-                         // Navigator.push(context,MaterialPageRoute(builder: (context) => const LoginScreen()));
+                          // Navigator.push(context,MaterialPageRoute(builder: (context) => const LoginScreen()));
                         },
                         child: const Text(
                           "Sign in",
@@ -133,7 +212,9 @@ class RegisterScreen extends StatelessWidget {
                 ),
               ),
             )),
-      ),
+          ),
+        );
+      },
     );
   }
 }
