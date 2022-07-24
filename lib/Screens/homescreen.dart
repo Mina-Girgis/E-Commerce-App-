@@ -1,4 +1,5 @@
 import 'package:e_commerce/Bloc/bloc_cubit.dart';
+import 'package:e_commerce/Screens/cart_screen.dart';
 import 'package:e_commerce/Shared/Components/components.dart';
 import 'package:e_commerce/categories/all.dart';
 import 'package:e_commerce/categories/electronicsscreen.dart';
@@ -49,7 +50,9 @@ class HomeScreen extends StatelessWidget {
             centerTitle: true,
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,MaterialPageRoute(builder: (context) =>  CartScreen()));
+                },
                 icon: const Icon(FontAwesomeIcons.bagShopping),
               )
             ],

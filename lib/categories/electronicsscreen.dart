@@ -15,7 +15,7 @@ class ElectronicsScreen extends StatelessWidget {
           return SingleChildScrollView(
             child: Column(
               children: [
-                ScreenItems(cubit.electroData),
+                ScreenItems(cubit.electroData,context),
                 SizedBox(height: 20.0,),
               ],
             ),

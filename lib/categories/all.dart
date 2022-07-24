@@ -6,9 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class AllScreen extends StatelessWidget {
-  const AllScreen({Key? key}) : super(key: key);
+class AllScreen extends StatefulWidget {
+  AllScreen({Key? key}) : super(key: key);
 
+  @override
+  State<AllScreen> createState() => _AllScreenState();
+}
+
+class _AllScreenState extends State<AllScreen> {
   @override
   Widget build(BuildContext context) {
     var cubit = BlocCubit.get(context);
@@ -54,10 +59,15 @@ class AllScreen extends StatelessWidget {
                 },
                 itemCount: 20,
                 itemBuilder: (context, index) {
-                  return InkWell(onTap: (){
+                  return InkWell(
+                    onTap: (){
+                    cubit.productQuantity = 1;
                     Navigator.push(context,MaterialPageRoute(builder: (context) =>  ProductInfo(model: cubit.allData[index],)));
-                  },
-                      child: ProductItem(cubit.allData[index]));
+                    setState((){
+
+                    });
+                    },
+                      child: ProductItem(cubit.allData[index] ,context));
                 },
               ),
             ),
@@ -95,8 +105,9 @@ class AllScreen extends StatelessWidget {
                     onTap: (){
                       Model model = cubit.getSpecificItem(cubit.allData[index].id);
                       print(model.title);
+
                     },
-                    child: ProductItem(cubit.allData[index]),
+                    child: ProductItem(cubit.allData[index],context),
                   );
                 },
               ),

@@ -141,7 +141,12 @@ class ProductInfo extends StatelessWidget {
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () {
+                            Model m = Model.fromModel(model!);
+                            m.ChangeQuantity(cubit.productQuantity);
+                            cubit.AddProductInCart(m);
+
+                          },
                           style: ElevatedButton.styleFrom(
                               primary: Colors.deepOrange,
                               shape: RoundedRectangleBorder(
@@ -161,8 +166,42 @@ class ProductInfo extends StatelessWidget {
                         height: 5,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+                          Expanded(
+                            child: Row(
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    if(cubit.productQuantity!=1){
+                                     cubit.ChangeProductQuantityMinus();
+                                    }
+                                  },
+                                  icon: Icon(
+                                    FontAwesomeIcons.minus,
+                                    size: 15.0,
+                                  ),
+                                ),
+                                Text(
+                                  "${cubit.productQuantity}",
+                                  style: TextStyle(
+                                    fontSize: 20.0
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    if(cubit.productQuantity < 5){
+                                      cubit.ChangeProductQuantityPlus();
+                                    }
+                                  },
+                                  icon: Icon(
+                                    FontAwesomeIcons.plus,
+                                    size: 15.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                           TextButton(
                             onPressed: () {},
                             child: const Text(
