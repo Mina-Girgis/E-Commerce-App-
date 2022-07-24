@@ -35,6 +35,10 @@ class GetSpecificProductDataFail extends BlocState {}
 
 class ChangeCurrentUserIdSuccess extends BlocState {}
 
+class ChangeProductQuantityPlusSuccess extends BlocState {}
+class ChangeProductQuantityMinusSuccess extends BlocState {}
 
+class AddProductInCartSuccess extends BlocState {}
 
+class RemoveProductInCartSuccess extends BlocState {}
 

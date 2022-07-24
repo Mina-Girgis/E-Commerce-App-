@@ -11,6 +11,7 @@ import 'Screens/productinfo.dart';
 import 'Screens/showdialouge.dart';
 import 'Screens/start_screen.dart';
 import 'Shared/Components/Network/Local/user_database.dart';
+import 'categories/all.dart';
 
 
 void main() {
@@ -58,6 +59,6 @@ class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return LoginScreen();
+    return HomeScreen();
   }
 }

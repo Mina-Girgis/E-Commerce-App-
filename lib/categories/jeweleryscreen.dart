@@ -14,7 +14,7 @@ class JeweleryScreen extends StatelessWidget {
           return SingleChildScrollView(
             child: Column(
               children: [
-                ScreenItems(cubit.jeweleryData),
+                ScreenItems(cubit.jeweleryData,context),
                 SizedBox(height: 20.0,),
               ],
             ),

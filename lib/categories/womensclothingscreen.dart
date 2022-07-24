@@ -14,7 +14,7 @@ class WomenClothingScreen extends StatelessWidget {
           return SingleChildScrollView(
             child: Column(
               children: [
-                ScreenItems(cubit.womenData),
+                ScreenItems(cubit.womenData,context),
                 SizedBox(height: 20.0,),
               ],
             ),
