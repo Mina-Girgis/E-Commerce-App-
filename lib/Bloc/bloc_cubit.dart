@@ -1,9 +1,9 @@
 import 'dart:ui';
-
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce/Models/productmodel.dart';
 import 'package:e_commerce/Models/usermodel.dart';
 import 'package:e_commerce/Shared/Components/Network/Local/user_database.dart';
+import 'package:e_commerce/Shared/Components/Network/Local/user_fav_database.dart';
 import 'package:e_commerce/Shared/Components/Network/Remote/diohelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,25 +13,63 @@ part 'bloc_state.dart';
 class BlocCubit extends Cubit<BlocState> {
     BlocCubit() : super(BlocInitial());
     static BlocCubit get(context)=> BlocProvider.of(context);
-
     int titleIndex = 0 ;
-
     dynamic currentUserId = 0;
-
     int productQuantity = 1;
+/********************************************/
 
-    List<int>nums =[1,2,3];
-    Color colorRed = Colors.red;
-    Color colorBlack = Colors.black38;
-
-    bool searchItem (int id){
-      for(int i =0 ; i <nums.length;i++){
-        if(id == nums[i])return true;
+    List<int>IDSFromDataBase = UserFavDatabase.userFavProductsID;
+    // id list from database
+    int findColor(int id){
+    // find its INDEX in all data by its ID
+    for(int i = 0 ; i < allData.length ; i++){
+      if(id == allData[i].id){
+        emit(FindColorSuccess());
+        return i;
       }
-      return false;
+    }
+    emit(FindColorFail());
+    return 0;
+  }
+    void SetFavProducts(){
+      // set Fav when screen opens
+      IDSFromDataBase.sort();
+      int idIndex = 0;
+      for(int i = 0 ; i < allData.length ; i++){
+          if(idIndex >= IDSFromDataBase.length)break;
+          if(allData[i].id == IDSFromDataBase[idIndex] ){
+            allData[i].ChangeColor();
+            idIndex++;
+          }
+      }
+      emit(SetFavProductSuccess());
+    }
+    void ChangeProductColor(int id){
+      bool inDataBase = false;
+      int index =-1;
+      for(int i =0 ; i < IDSFromDataBase.length ; i++){
+          if(IDSFromDataBase[i]==id){
+            inDataBase=true;
+            index = i;
+            break;
+          }
+      }
+
+      for(int i = 0 ; i < allData.length ; i++){
+        if(allData[i].id == id ){
+          if(inDataBase){UserFavDatabase.deleteProductFromDatabase(1, id);}
+          else UserFavDatabase.insertDatabase(userID: 1, productId: id);
+
+          allData[i].ChangeColor();
+          break;
+        }
+      }
+      // print(IDSFromDataBase);
+      emit(ChangeProductColorSuccess());
     }
 
-    List<User> users= UsersDatabase.userData;
+/**********************************************/
+    List<User> users = UsersDatabase.userData;
     List <dynamic> _AllData=[];
     List <dynamic> _Electronics=[];
     List <dynamic> _MenClothing=[];
@@ -166,3 +204,53 @@ class BlocCubit extends Cubit<BlocState> {
 
 
 }
+/*
+
+ void ChangeProductColor(int index){
+      allData[index].ChangeColor();
+      // int position = searchItem(index);
+      // if(position == -1){
+      //   allData[index].ChangeColor();
+      //   IDSFromDataBase.add(index+1);
+      //   print("Added");
+      // }else{
+      //   allData[index].ChangeColor();
+      //   IDSFromDataBase.removeAt(position);
+      //   print("deleted");
+      // }
+      // print(IDSFromDataBase);
+      emit(ChangeProductColorSuccess());
+    }
+
+int searchItem (int id){
+      // is the item in IDSFromDataBase or not ??
+      // return its index
+      for(int i =0 ; i < IDSFromDataBase.length;i++){
+        if(id == IDSFromDataBase[i])
+          return id;
+      }
+      return -1;
+    }
+    // not we have its id
+    // search in all data
+    // return its plase in all Data
+    int GetItemIndexInAllDataById(int id){
+      for(int i =0 ; i < allData.length ;i++){
+        if(allData[i].id==id){
+          emit(GetItemIndexInAllDataByIdSuccess());
+          return i;
+        }
+      }
+      emit(GetItemIndexInAllDataByIdFail());
+      return -1;
+    }
+
+    void ChangeAllColorsFromDatabase(){
+      for(int i = 0 ; i < IDSFromDataBase.length ; i++){
+        allData[GetItemIndexInAllDataById(IDSFromDataBase[i])].ChangeColor();
+      }
+      emit(UpdateFavFromDatabaseSuccess());
+    }
+
+
+ */

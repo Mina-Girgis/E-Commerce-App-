@@ -11,6 +11,7 @@ import 'Screens/productinfo.dart';
 import 'Screens/showdialouge.dart';
 import 'Screens/start_screen.dart';
 import 'Shared/Components/Network/Local/user_database.dart';
+import 'Shared/Components/Network/Local/user_fav_database.dart';
 import 'categories/all.dart';
 
 
@@ -18,6 +19,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
   UsersDatabase.createDatabase();
+  UserFavDatabase.createDatabase();
   runApp(const Myapp());
 }
 
@@ -27,7 +29,12 @@ class Myapp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => BlocCubit()..getJewelery()..getAll()..getElectronics()..getMenClothing()..getWomenClothing(),
+      create: (context) => BlocCubit()
+        ..getJewelery()
+        ..getAll()
+        ..getElectronics()
+        ..getMenClothing()
+        ..getWomenClothing(),
       child: BlocConsumer<BlocCubit, BlocState>(
         listener: (context, state) {},
         builder: (context, state) {

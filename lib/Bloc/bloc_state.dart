@@ -42,3 +42,23 @@ class AddProductInCartSuccess extends BlocState {}
 
 class RemoveProductInCartSuccess extends BlocState {}
 
+class SetFavProductSuccess extends BlocState {}
+
+class ChangeProductColorSuccess extends BlocState {}
+
+
+class FindColorSuccess extends BlocState {}
+
+
+class FindColorFail extends BlocState {}
+
+
+
+// class UpdateFavFromDatabaseSuccess extends BlocState {}
+//
+// class GetItemIndexInAllDataByIdSuccess extends BlocState {}
+//
+// class GetItemIndexInAllDataByIdFail extends BlocState {}
+
+
+
