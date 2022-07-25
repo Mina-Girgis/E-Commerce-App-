@@ -38,7 +38,10 @@ class Myapp extends StatelessWidget {
               appBarTheme: const AppBarTheme(
                   backgroundColor: Color.fromRGBO(255, 255, 255, 1.0),
                   elevation: 0.0,
-                  systemOverlayStyle: SystemUiOverlayStyle(),
+                  systemOverlayStyle: SystemUiOverlayStyle(
+                    statusBarColor: Colors.black,
+                    statusBarIconBrightness: Brightness.light,
+                  ),
                   iconTheme: IconThemeData(
                     color: Colors.black,
                   )),

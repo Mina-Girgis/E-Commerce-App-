@@ -244,23 +244,23 @@ Widget ProductCart(Model model, context) {
                 // SizedBox(height: 2.0,),
                 Text(
                   '\$${model.price} x ${model.quantity}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 17,
-                    color: Colors.grey,
+                    color: Colors.blueGrey,
                   ),
                 ),
                 Text(
                   '\$${model.price * model.quantity}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 17,
-                    color: Colors.grey,
+                    color: Colors.blueGrey,
                   ),
                 ),
               ],
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 15.0,
         ),
       ],
