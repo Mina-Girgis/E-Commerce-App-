@@ -1,16 +1,25 @@
-import 'package:e_commerce/Screens/account_settings.dart';
 import 'package:e_commerce/Shared/Components/Network/Remote/diohelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'Bloc/bloc_cubit.dart';
+import 'Screens/homescreen.dart';
+import 'Screens/login.dart';
+import 'Screens/register.dart';
+import 'Screens/productinfo.dart';
+import 'Screens/showdialouge.dart';
+import 'Screens/start_screen.dart';
 import 'Shared/Components/Network/Local/user_database.dart';
+import 'Shared/Components/Network/Local/user_fav_database.dart';
+import 'categories/all.dart';
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
   UsersDatabase.createDatabase();
+  UserFavDatabase.createDatabase();
   runApp(const Myapp());
 }
 
@@ -39,9 +48,12 @@ class Myapp extends StatelessWidget {
                   systemOverlayStyle: SystemUiOverlayStyle(),
                   iconTheme: IconThemeData(
                     color: Colors.black,
-                  )),
+                  )
+
+              ),
               scaffoldBackgroundColor: Colors.white,
             ),
+
             home: const Home(),
           );
         },
@@ -54,6 +66,6 @@ class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return AccountSettings();
+    return HomeScreen();
   }
 }

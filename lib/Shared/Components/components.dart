@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce/Bloc/bloc_cubit.dart';
 import 'package:e_commerce/Models/productmodel.dart';
 import 'package:e_commerce/Screens/productinfo.dart';
+import 'package:e_commerce/Shared/Components/Network/Local/user_fav_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cupertino_icons/cupertino_icons.dart';
@@ -113,12 +114,19 @@ Widget ProductItem(Model model, context){
                     ),
                   ),
                   IconButton(
-                    onPressed: () {
-                      cubit.allData[model.id-1].ChangeColor();
+                    onPressed: () async{
+                      // SEND USERID HERE TO THE FUNCTIONS
+                      cubit.ChangeProductColor(model.id);
+                      // UserFavDatabase.deleteAllData();
+                      // await UserFavDatabase.insertDatabase(userID: 1, productId: 1);
+                      // await UserFavDatabase.insertDatabase(userID: 1, productId: 2);
+                      // await UserFavDatabase.insertDatabase(userID: 1, productId: 3);
+                      // await UserFavDatabase.getData(UserFavDatabase.database, 1);
+                      // print(UserFavDatabase.userFavProductsID.length);
                     },
                     icon: Icon(
                       FontAwesomeIcons.heart,
-                      color: cubit.allData[model.id-1].color,
+                      color: cubit.allData[cubit.findColor(model.id)].color,
                     ),
                     // icon heartCircleCheck
                     iconSize: 26.0,
@@ -187,8 +195,7 @@ Widget ScreenItems(List<Model>model,context) {
             return InkWell(
               onTap: () {
                 cubit.productQuantity=1;
-                Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => ProductInfo(model: model[index],)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ProductInfo(model: model[index],)));
               },
               child: ProductItem(model[index], context),
             );

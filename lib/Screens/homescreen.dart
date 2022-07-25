@@ -51,6 +51,7 @@ class HomeScreen extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {
+                  cubit.SetFavProducts();
                   Navigator.push(context,MaterialPageRoute(builder: (context) =>  CartScreen()));
                 },
                 icon: const Icon(FontAwesomeIcons.bagShopping),

@@ -70,9 +70,12 @@ class ProductInfo extends StatelessWidget {
                             ),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              cubit.ChangeProductColor(model!.id);
+                            },
                             icon: const Icon(FontAwesomeIcons.heart),
                             iconSize: 30,
+                            color: cubit.allData[cubit.findColor(model!.id)].color,
                           )
                         ],
                       ),
