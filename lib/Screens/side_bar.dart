@@ -1,3 +1,4 @@
+import 'package:e_commerce/Models/side_bar_data.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -6,6 +7,13 @@ class SideBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<SideData> sideData = [
+      SideData(icon: FontAwesomeIcons.home, title: "Home"),
+      SideData(icon: FontAwesomeIcons.gear, title: "Account Settings"),
+      SideData(icon: FontAwesomeIcons.heart, title: "Favourites"),
+      SideData(icon: FontAwesomeIcons.arrowRightFromBracket, title: "Logout"),
+    ];
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -32,52 +40,31 @@ class SideBar extends StatelessWidget {
                         "https://img.freepik.com/free-vector/floral-ornamental-abstract-background_52683-30016.jpg?w=2000"),
                     fit: BoxFit.cover)),
           ),
-          ListTile(
-            leading: const Icon(
-              FontAwesomeIcons.home,
-              size: 20,
-            ),
-            title: const Text(
-              "Home",
-              style: TextStyle(fontSize: 20),
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: const Icon(FontAwesomeIcons.bell),
-            title: const Text(
-              "Notification",
-              style: TextStyle(fontSize: 20),
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: const Icon(FontAwesomeIcons.list),
-            title: const Text(
-              "Catergories",
-              style: TextStyle(fontSize: 20),
-            ),
-            onTap: () {},
-          ),
-          const Divider(),
-          ListTile(
-            leading: Icon(FontAwesomeIcons.gear),
-            title: Text(
-              "Account Settings",
-              style: TextStyle(fontSize: 20),
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: Icon(FontAwesomeIcons.a),
-            title: Text("first"),
-            onTap: () {},
-          ),
-          const Divider(),
-          ListTile(
-            leading: Icon(FontAwesomeIcons.arrowRightFromBracket),
-            title: Text("Logout"),
-            onTap: () {},
+          SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: ListView.separated(
+                separatorBuilder: (context, index) {
+                  return const Padding(
+                    padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                    child: Divider(
+                      thickness: 1.3,
+                    ),
+                  );
+                },
+                itemCount: sideData.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: Icon(
+                      sideData[index].icon,
+                      size: 20,
+                    ),
+                    title: Text(
+                      sideData[index].title,
+                      style: const TextStyle(fontSize: 20, color: Colors.black),
+                    ),
+                    onTap: () {},
+                  );
+                }),
           ),
         ],
       ),
