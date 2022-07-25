@@ -2,6 +2,8 @@ import 'package:e_commerce/Models/side_bar_data.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'favourite_screen.dart';
+
 class SideBar extends StatelessWidget {
   const SideBar({Key? key}) : super(key: key);
 
@@ -62,7 +64,12 @@ class SideBar extends StatelessWidget {
                       sideData[index].title,
                       style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FavouriteScreen()));
+                    },
                   );
                 }),
           ),

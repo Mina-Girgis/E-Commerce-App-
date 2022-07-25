@@ -2,10 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce/Bloc/bloc_cubit.dart';
 import 'package:e_commerce/Models/productmodel.dart';
 import 'package:e_commerce/Screens/productinfo.dart';
-import 'package:e_commerce/Shared/Components/Network/Local/user_fav_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cupertino_icons/cupertino_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 final urlImages = [
@@ -17,9 +15,7 @@ final urlImages = [
 ];
 
 Widget CategoriesTitle(String s, int index, context) {
-  int num = BlocCubit
-      .get(context)
-      .titleIndex;
+  int num = BlocCubit.get(context).titleIndex;
   return BlocConsumer<BlocCubit, BlocState>(
     listener: (context, state) {},
     builder: (context, state) {
@@ -39,16 +35,14 @@ Widget CategoriesTitle(String s, int index, context) {
   );
 }
 
-
-
-Widget ProductItem(Model model, context){
+Widget ProductItem(Model model, context) {
   var cubit = BlocCubit.get(context);
   return BlocConsumer<BlocCubit, BlocState>(
     listener: (context, state) {
       // TODO: implement listener
     },
     builder: (context, state) {
-      int x =0;
+      int x = 0;
       return Container(
         width: 190,
         height: 310,
@@ -69,9 +63,9 @@ Widget ProductItem(Model model, context){
               width: 180,
               height: 170,
               decoration: BoxDecoration(
-                // color:Color.fromRGBO(231, 231, 231, 1.0),
-                //   borderRadius: BorderRadius.circular(20.0),
-              ),
+                  // color:Color.fromRGBO(231, 231, 231, 1.0),
+                  //   borderRadius: BorderRadius.circular(20.0),
+                  ),
               child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: ClipRRect(
@@ -114,7 +108,7 @@ Widget ProductItem(Model model, context){
                     ),
                   ),
                   IconButton(
-                    onPressed: () async{
+                    onPressed: () async {
                       // SEND USERID HERE TO THE FUNCTIONS
                       cubit.ChangeProductColor(model.id);
                       // UserFavDatabase.deleteAllData();
@@ -144,7 +138,8 @@ Widget ProductItem(Model model, context){
 Widget Sliderrr() {
   return CarouselSlider.builder(
       itemCount: urlImages.length,
-      options: CarouselOptions(height: 200,
+      options: CarouselOptions(
+          height: 200,
           autoPlay: true,
           enlargeCenterPage: true,
           enlargeStrategy: CenterPageEnlargeStrategy.height,
@@ -152,8 +147,7 @@ Widget Sliderrr() {
       itemBuilder: (context, index, realIndex) {
         final urlImage = urlImages[index];
         return buildImage(urlImage, index);
-      }
-  );
+      });
 }
 
 Widget buildImage(String urlImage, int index) {
@@ -170,7 +164,7 @@ Widget buildImage(String urlImage, int index) {
   );
 }
 
-Widget ScreenItems(List<Model>model,context) {
+Widget ScreenItems(List<Model> model, context) {
   var cubit = BlocCubit.get(context);
   return BlocConsumer<BlocCubit, BlocState>(
     listener: (context, state) {
@@ -194,8 +188,13 @@ Widget ScreenItems(List<Model>model,context) {
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
-                cubit.productQuantity=1;
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ProductInfo(model: model[index],)));
+                cubit.productQuantity = 1;
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ProductInfo(
+                              model: model[index],
+                            )));
               },
               child: ProductItem(model[index], context),
             );
@@ -206,19 +205,18 @@ Widget ScreenItems(List<Model>model,context) {
   );
 }
 
-
-Widget ProductCart(Model model,context){
-
+Widget ProductCart(Model model, context) {
   return Padding(
     padding: const EdgeInsets.all(20.0),
     child: Row(
-      children:
-      [
+      children: [
         Container(
           width: 120.0,
           height: 120.0,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0,),
+            borderRadius: BorderRadius.circular(
+              10.0,
+            ),
             image: DecorationImage(
               image: NetworkImage('${model.image}'),
               fit: BoxFit.contain,
@@ -234,8 +232,7 @@ Widget ProductCart(Model model,context){
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
-              children:
-              [
+              children: [
                 Expanded(
                   child: Text(
                     '${model.title}',
@@ -253,7 +250,7 @@ Widget ProductCart(Model model,context){
                   ),
                 ),
                 Text(
-                  '\$${model.price*model.quantity}',
+                  '\$${model.price * model.quantity}',
                   style: TextStyle(
                     fontSize: 17,
                     color: Colors.grey,
@@ -269,4 +266,77 @@ Widget ProductCart(Model model,context){
       ],
     ),
   );
+}
+
+Widget ProductFavourite(Model model, context) {
+  var cubit = BlocCubit.get(context);
+  return Padding(
+    padding: const EdgeInsets.all(20.0),
+    child: Row(
+      children: [
+        Container(
+          width: 120.0,
+          height: 120.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(
+              10.0,
+            ),
+            image: DecorationImage(
+              image: NetworkImage('${model.image}'),
+              fit: BoxFit.contain,
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 20.0,
+        ),
+        Expanded(
+          child: Container(
+            height: 120.0,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Text(
+                    '${model.title}',
+                    style: const TextStyle(fontSize: 17),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                // SizedBox(height: 2.0,),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '\$${model.price}',
+                        style: const TextStyle(
+                          fontSize: 17,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        cubit.ChangeProductColor(model.id);
+                      },
+                      child: Icon(
+                        FontAwesomeIcons.heart,
+                        color: cubit.allData[cubit.findColor(model.id)].color,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 15.0,
+        ),
+      ],
+    ),
+  );
+  ;
 }
