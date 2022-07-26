@@ -75,7 +75,8 @@ class ProductInfo extends StatelessWidget {
                             },
                             icon: const Icon(FontAwesomeIcons.heart),
                             iconSize: 30,
-                            color: cubit.allData[cubit.findColor(model!.id)].color,
+                            color:
+                                cubit.allData[cubit.findColor(model!.id)].color,
                           )
                         ],
                       ),
@@ -89,7 +90,8 @@ class ProductInfo extends StatelessWidget {
                       ),
                       Text(
                         "${model!.title}",
-                        style: const TextStyle(fontSize: 20, color: Colors.red),
+                        style: const TextStyle(
+                            fontSize: 20, color: Colors.deepOrange),
                       ),
                       const SizedBox(
                         height: 10,
@@ -146,9 +148,16 @@ class ProductInfo extends StatelessWidget {
                         child: ElevatedButton.icon(
                           onPressed: () {
                             Model m = Model.fromModel(model!);
-                            m.ChangeQuantity(cubit.productQuantity);
-                            cubit.AddProductInCart(m);
-
+                            int index = cubit.SearchInCartData(m.id);
+                            if (index != -1) {
+                              int? q = cubit.cartData[index].quantity! +
+                                  cubit.productQuantity;
+                              cubit.cartData[index].ChangeQuantity(q);
+                              // ChangeQuantity();
+                            } else {
+                              m.ChangeQuantity(cubit.productQuantity);
+                              cubit.AddProductInCart(m);
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                               primary: Colors.deepOrange,
@@ -176,8 +185,8 @@ class ProductInfo extends StatelessWidget {
                               children: [
                                 IconButton(
                                   onPressed: () {
-                                    if(cubit.productQuantity!=1){
-                                     cubit.ChangeProductQuantityMinus();
+                                    if (cubit.productQuantity != 1) {
+                                      cubit.ChangeProductQuantityMinus();
                                     }
                                   },
                                   icon: Icon(
@@ -187,13 +196,11 @@ class ProductInfo extends StatelessWidget {
                                 ),
                                 Text(
                                   "${cubit.productQuantity}",
-                                  style: TextStyle(
-                                    fontSize: 20.0
-                                  ),
+                                  style: TextStyle(fontSize: 20.0),
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    if(cubit.productQuantity < 5){
+                                    if (cubit.productQuantity < 5) {
                                       cubit.ChangeProductQuantityPlus();
                                     }
                                   },
