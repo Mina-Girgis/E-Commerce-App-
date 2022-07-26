@@ -146,9 +146,15 @@ class ProductInfo extends StatelessWidget {
                         child: ElevatedButton.icon(
                           onPressed: () {
                             Model m = Model.fromModel(model!);
-                            m.ChangeQuantity(cubit.productQuantity);
-                            cubit.AddProductInCart(m);
-
+                            int index = cubit.SearchInCartData(m.id);
+                            if(index != -1){
+                                int? q = cubit.cartData[index].quantity! + cubit.productQuantity;
+                                cubit.cartData[index].ChangeQuantity(q);
+                               // ChangeQuantity();
+                            }else{
+                              m.ChangeQuantity(cubit.productQuantity);
+                              cubit.AddProductInCart(m);
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                               primary: Colors.deepOrange,
