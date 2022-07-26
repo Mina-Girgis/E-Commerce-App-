@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:e_commerce/Bloc/bloc_cubit.dart';
 import 'package:e_commerce/Screens/register.dart';
 import 'package:e_commerce/Shared/Components/Network/Local/user_database.dart';
@@ -106,18 +105,24 @@ class LoginScreen extends StatelessWidget {
                               context: context,
                               builder: (ctx) {
                                 return AlertDialog(
-                                  title: const Text("Alert Dialog Box"),
+                                  title: const Text(
+                                    "Need Help?",
+                                  ),
                                   content: const Text(
-                                      "You have raised a Alert Dialog Box"),
+                                      "enter your email and password."),
                                   actions: <Widget>[
                                     TextButton(
                                       onPressed: () {
                                         Navigator.of(ctx).pop();
                                       },
                                       child: Container(
-                                        color: Colors.green,
                                         padding: const EdgeInsets.all(14),
-                                        child: const Text("okay"),
+                                        child: const Text(
+                                          "okay",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 20),
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -130,7 +135,7 @@ class LoginScreen extends StatelessWidget {
                         "Login",
                         style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
-                      color: const Color.fromRGBO(252, 92, 69, 1.0),
+                      color: Colors.deepOrange,
                       minWidth: 300,
                       height: 56,
                       shape: const RoundedRectangleBorder(
@@ -142,14 +147,17 @@ class LoginScreen extends StatelessWidget {
                     const Text("Don't have an account ? "),
                     FlatButton(
                         onPressed: () {
-                          // Navigator.push(context,MaterialPageRoute(builder: (context) => const RegisterScreen()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RegisterScreen()));
                         },
                         child: const Text(
                           "Sign up",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 17,
-                              color: Color.fromRGBO(252, 92, 69, 1.0)),
+                              color: Colors.deepOrange),
                         ))
                   ],
                 ),

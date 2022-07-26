@@ -1,4 +1,7 @@
 import 'package:e_commerce/Models/side_bar_data.dart';
+import 'package:e_commerce/Screens/account_settings.dart';
+import 'package:e_commerce/Screens/homescreen.dart';
+import 'package:e_commerce/Screens/start_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -14,6 +17,12 @@ class SideBar extends StatelessWidget {
       SideData(icon: FontAwesomeIcons.gear, title: "Account Settings"),
       SideData(icon: FontAwesomeIcons.heart, title: "Favourites"),
       SideData(icon: FontAwesomeIcons.arrowRightFromBracket, title: "Logout"),
+    ];
+    List<Widget> navigation = [
+      HomeScreen(),
+      AccountSettings(),
+      FavouriteScreen(),
+      StartScreen(),
     ];
 
     return Drawer(
@@ -36,6 +45,7 @@ class SideBar extends StatelessWidget {
                 ),
               ),
             ),
+            // cover image if you want to use https://i.pinimg.com/originals/c7/f8/85/c7f885e6d88fe8c762ed06de7386b4a8.jpg
             decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: NetworkImage(
@@ -68,7 +78,7 @@ class SideBar extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => FavouriteScreen()));
+                              builder: (context) => navigation[index]));
                     },
                   );
                 }),

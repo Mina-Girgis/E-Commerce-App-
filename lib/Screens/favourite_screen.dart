@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:e_commerce/Bloc/bloc_cubit.dart';
 import 'package:e_commerce/Shared/Components/components.dart';
 import 'package:flutter/material.dart';
@@ -19,45 +20,46 @@ class FavouriteScreen extends StatelessWidget {
           appBar: AppBar(
             actions: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    const Icon(
-                      FontAwesomeIcons.heart,
-                      color: Colors.red,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    // cubit.IDSFromDataBase.length.toString(),
-                    Text(
-                      (cubit.IDSFromDataBase.length > 100)
-                          ? "100+"
-                          : cubit.IDSFromDataBase.length.toString(),
-                      style: const TextStyle(color: Colors.black, fontSize: 30),
-                    ),
-                  ],
+                padding: const EdgeInsets.all(13.0),
+                child: Badge(
+                  badgeColor: Colors.deepOrange,
+                  badgeContent: Text(cubit.IDSFromDataBase.length.toString()),
+                  child: const Icon(
+                    FontAwesomeIcons.heart,
+                  ),
                 ),
               ),
             ],
             elevation: 2,
             title: const Text(
               "Favourites",
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: Colors.deepOrange),
             ),
           ),
           body: (cubit.IDSFromDataBase.isEmpty)
               ? Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        "No Favourites Added",
+                    children: [
+                      const Text(
+                        "No Favourites found",
                         style: TextStyle(fontSize: 22),
                       ),
-                      Text(
-                        "Please add some items to your favourites.",
-                        style: TextStyle(fontSize: 17),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            "Press ",
+                            style: TextStyle(
+                                fontSize: 17, color: Colors.deepOrange),
+                          ),
+                          Icon(FontAwesomeIcons.heart,
+                              color: Colors.deepOrange),
+                          Text(
+                            " to add an item to your favourites",
+                            style: TextStyle(fontSize: 17),
+                          ),
+                        ],
                       ),
                     ],
                   ),

@@ -1,10 +1,9 @@
 import 'package:e_commerce/Bloc/bloc_cubit.dart';
-import 'package:e_commerce/Models/usermodel.dart';
-import 'package:e_commerce/Screens/login.dart';
-import 'package:e_commerce/Screens/showdialouge.dart';
 import 'package:e_commerce/Shared/Components/Network/Local/user_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'login.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
@@ -136,7 +135,7 @@ class RegisterScreen extends StatelessWidget {
                         // UsersDatabase.getData(UsersDatabase.database);
                         print(cubit.users[0].mail);
                         print(cubit.users[1].mail);
-                          print(cubit.users[2].mail);
+                        print(cubit.users[2].mail);
 
                         if (!UsersDatabase.isFoundInDatabase(
                             name: NameController.value.text,
@@ -159,35 +158,36 @@ class RegisterScreen extends StatelessWidget {
                             print(" Login Successfully ");
                             // UsersDatabase.getData(UsersDatabase.database);
                           }
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (ctx) {
+                                return AlertDialog(
+                                  title: const Text("Alert Dialog Box"),
+                                  content: const Text(
+                                      "You have raised a Alert Dialog Box"),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(ctx).pop();
+                                      },
+                                      child: Container(
+                                        color: Colors.green,
+                                        padding: const EdgeInsets.all(14),
+                                        child: const Text("okay"),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              });
                         }
-                          else{
-                            showDialog(context: context,
-                                builder: (ctx){
-                               return AlertDialog(
-                                 title: const Text("Alert Dialog Box"),
-                                 content: const Text("You have raised a Alert Dialog Box"),
-                                 actions: <Widget>[
-                                   TextButton(
-                                     onPressed: () {
-                                       Navigator.of(ctx).pop();
-                                     },
-                                     child: Container(
-                                       color: Colors.green,
-                                       padding: const EdgeInsets.all(14),
-                                       child: const Text("okay"),
-                                     ),
-                                   ),
-                                 ],
-                               ) ;
-                                });
-                          }
                         // Navigator.push(context,MaterialPageRoute(builder: (context) => const SecondRoute()),
                       },
                       child: const Text(
                         "Sign Up",
                         style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
-                      color: const Color.fromRGBO(252, 92, 69, 1.0),
+                      color: Colors.deepOrange,
                       minWidth: 300,
                       height: 56,
                       shape: const RoundedRectangleBorder(
@@ -199,14 +199,17 @@ class RegisterScreen extends StatelessWidget {
                     const Text("Already have an account ? "),
                     FlatButton(
                         onPressed: () {
-                          // Navigator.push(context,MaterialPageRoute(builder: (context) => const LoginScreen()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()));
                         },
                         child: const Text(
                           "Sign in",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 17,
-                              color: Color.fromRGBO(252, 92, 69, 1.0)),
+                              color: Colors.deepOrange),
                         ))
                   ],
                 ),
