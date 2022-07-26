@@ -1,4 +1,4 @@
-#Mon Jul 25 22:08:32 EET 2022
+#Tue Jul 26 11:54:54 EET 2022
 base.0=C\:\\Users\\DC User\\StudioProjects\\E-commerce\\E-Commerce-App-\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 renamed.0=classes.dex
 path.0=classes.dex
