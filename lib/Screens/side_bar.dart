@@ -75,10 +75,10 @@ class SideBar extends StatelessWidget {
                       style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => navigation[index]));
+                      if(index == 0){ Navigator.pop(context);}
+                      else{
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => navigation[index]));
+                      }
                     },
                   );
                 }),

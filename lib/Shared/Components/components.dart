@@ -206,6 +206,7 @@ Widget ScreenItems(List<Model> model, context) {
 }
 
 Widget ProductCart(Model model, context) {
+  var cubit = BlocCubit.get(context);
   return Padding(
     padding: const EdgeInsets.all(20.0),
     child: Row(
@@ -242,15 +243,29 @@ Widget ProductCart(Model model, context) {
                   ),
                 ),
                 // SizedBox(height: 2.0,),
-                Text(
-                  '\$${model.price} x ${model.quantity}',
-                  style: const TextStyle(
-                    fontSize: 17,
-                    color: Colors.blueGrey,
-                  ),
+                Row(
+                  children: [
+                    
+                    Expanded(
+                      child: Text(
+                        '\$${model.price} x ${model.quantity}',
+                        style: const TextStyle(
+                          fontSize: 17,
+                          color: Colors.blueGrey,
+                        ),
+                      ),
+                    ),
+                    IconButton(onPressed: (){
+                       model.quantity = model.quantity!-1;
+                       if(model.quantity == 0){
+                         int index = cubit.SearchInCartData(model.id);
+                         cubit.cartData.removeAt(index);
+                       }
+                    }, icon: Icon(FontAwesomeIcons.minus))
+                  ],
                 ),
                 Text(
-                  '\$${model.price * model.quantity}',
+                  '\$${(model.price * model.quantity).toStringAsFixed(3)}',
                   style: const TextStyle(
                     fontSize: 17,
                     color: Colors.blueGrey,

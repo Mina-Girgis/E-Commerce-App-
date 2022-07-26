@@ -53,6 +53,7 @@ class _AllScreenState extends State<AllScreen> {
               // width: 200,
               height: 270,
               child: ListView.separated(
+                physics: ScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 separatorBuilder: (context, index) {
                   return SizedBox(width: 20,);

@@ -52,6 +52,7 @@ class FindColorSuccess extends BlocState {}
 
 class FindColorFail extends BlocState {}
 
+class SearchInCartDataSuccess extends BlocState {}
 
 
 // class UpdateFavFromDatabaseSuccess extends BlocState {}

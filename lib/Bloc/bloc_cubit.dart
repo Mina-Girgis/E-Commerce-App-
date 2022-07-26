@@ -214,6 +214,25 @@ class BlocCubit extends Cubit<BlocState> {
     emit(GetSpecificProductDataFail());
     return model;
   }
+
+  int SearchInCartData(int id){
+    int start=0;
+    int end = cartData.length-1;
+    int loc =-1;
+    while(start <= end){
+      int mid = ((start+end)/2).toInt();
+      if(cartData[mid].id < id) start=mid+1;
+      else if(cartData[mid].id > id)end=mid-1;
+      else{
+        loc = mid;
+        break;
+      }
+    }
+    emit(SearchInCartDataSuccess());
+    return loc;
+  }
+
+
 }
 /*
 
