@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'comments_screen.dart';
+
 class ProductInfo extends StatelessWidget {
   Model? model;
 
@@ -12,6 +14,7 @@ class ProductInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var cubit = BlocCubit.get(context);
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -75,7 +78,8 @@ class ProductInfo extends StatelessWidget {
                             },
                             icon: const Icon(FontAwesomeIcons.heart),
                             iconSize: 30,
-                            color: cubit.allData[cubit.findColor(model!.id)].color,
+                            color:
+                                cubit.allData[cubit.findColor(model!.id)].color,
                           )
                         ],
                       ),
@@ -89,7 +93,8 @@ class ProductInfo extends StatelessWidget {
                       ),
                       Text(
                         "${model!.title}",
-                        style: const TextStyle(fontSize: 20, color: Colors.red),
+                        style: const TextStyle(
+                            fontSize: 20, color: Colors.deepOrange),
                       ),
                       const SizedBox(
                         height: 10,
@@ -147,11 +152,12 @@ class ProductInfo extends StatelessWidget {
                           onPressed: () {
                             Model m = Model.fromModel(model!);
                             int index = cubit.SearchInCartData(m.id);
-                            if(index != -1){
-                                int? q = cubit.cartData[index].quantity! + cubit.productQuantity;
-                                cubit.cartData[index].ChangeQuantity(q);
-                               // ChangeQuantity();
-                            }else{
+                            if (index != -1) {
+                              int? q = cubit.cartData[index].quantity! +
+                                  cubit.productQuantity;
+                              cubit.cartData[index].ChangeQuantity(q);
+                              // ChangeQuantity();
+                            } else {
                               m.ChangeQuantity(cubit.productQuantity);
                               cubit.AddProductInCart(m);
                             }
@@ -182,8 +188,8 @@ class ProductInfo extends StatelessWidget {
                               children: [
                                 IconButton(
                                   onPressed: () {
-                                    if(cubit.productQuantity!=1){
-                                     cubit.ChangeProductQuantityMinus();
+                                    if (cubit.productQuantity != 1) {
+                                      cubit.ChangeProductQuantityMinus();
                                     }
                                   },
                                   icon: Icon(
@@ -193,13 +199,11 @@ class ProductInfo extends StatelessWidget {
                                 ),
                                 Text(
                                   "${cubit.productQuantity}",
-                                  style: TextStyle(
-                                    fontSize: 20.0
-                                  ),
+                                  style: TextStyle(fontSize: 20.0),
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    if(cubit.productQuantity < 5){
+                                    if (cubit.productQuantity < 5) {
                                       cubit.ChangeProductQuantityPlus();
                                     }
                                   },
@@ -212,9 +216,12 @@ class ProductInfo extends StatelessWidget {
                             ),
                           ),
                           TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              "Show Comments",
+                            onPressed: () {
+                              Navigator.push(context,MaterialPageRoute(builder: (context) =>  ShowCommentsScreen(productId: model!.id)));
+
+                            },
+                            child: Text(
+                              "Show Reviews",
                               style: TextStyle(
                                   fontSize: 17, color: Colors.deepOrange),
                             ),

@@ -1,10 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce/Bloc/bloc_cubit.dart';
+import 'package:e_commerce/Models/comments_model.dart';
 import 'package:e_commerce/Models/productmodel.dart';
 import 'package:e_commerce/Screens/productinfo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 final urlImages = [
   'https://3udno63459u23yboa6366rls-wpengine.netdna-ssl.com/wp-content/uploads/2017/05/Best-Offers-In-Ecommerce.jpg',
@@ -37,12 +39,12 @@ Widget CategoriesTitle(String s, int index, context) {
 
 Widget ProductItem(Model model, context) {
   var cubit = BlocCubit.get(context);
+
   return BlocConsumer<BlocCubit, BlocState>(
     listener: (context, state) {
       // TODO: implement listener
     },
     builder: (context, state) {
-      int x = 0;
       return Container(
         width: 190,
         height: 310,
@@ -254,13 +256,15 @@ Widget ProductCart(Model model, context) {
                         ),
                       ),
                     ),
-                    IconButton(onPressed: (){
-                       model.quantity = model.quantity!-1;
-                       if(model.quantity == 0){
-                         int index = cubit.SearchInCartData(model.id);
-                         cubit.cartData.removeAt(index);
-                       }
-                    }, icon: Icon(FontAwesomeIcons.minus))
+                    IconButton(
+                        onPressed: () {
+                          model.quantity = model.quantity! - 1;
+                          if (model.quantity == 0) {
+                            int index = cubit.SearchInCartData(model.id);
+                            cubit.cartData.removeAt(index);
+                          }
+                        },
+                        icon: Icon(FontAwesomeIcons.minus))
                   ],
                 ),
                 Text(
@@ -284,73 +288,112 @@ Widget ProductCart(Model model, context) {
 
 Widget ProductFavourite(Model model, context) {
   var cubit = BlocCubit.get(context);
-  return Padding(
-    padding: const EdgeInsets.all(20.0),
-    child: Row(
-      children: [
-        Container(
-          width: 120.0,
-          height: 120.0,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              10.0,
-            ),
-            image: DecorationImage(
-              image: NetworkImage('${model.image}'),
-              fit: BoxFit.contain,
+  return InkWell(
+    onTap: (){
+      cubit.productQuantity=1;
+      Navigator.push(context,MaterialPageRoute(builder: (context) =>  ProductInfo(model:model)));
+    },
+    child: Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Row(
+        children: [
+          Container(
+            width: 120.0,
+            height: 120.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                10.0,
+              ),
+              image: DecorationImage(
+                image: NetworkImage('${model.image}'),
+                fit: BoxFit.contain,
+              ),
             ),
           ),
-        ),
-        SizedBox(
-          width: 20.0,
-        ),
-        Expanded(
-          child: Container(
-            height: 120.0,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Text(
-                    '${model.title}',
-                    style: const TextStyle(fontSize: 17),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
+          SizedBox(
+            width: 20.0,
+          ),
+          Expanded(
+            child: Container(
+              height: 120.0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text(
+                      '${model.title}',
+                      style: const TextStyle(fontSize: 17),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-                // SizedBox(height: 2.0,),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        '\$${model.price}',
-                        style: const TextStyle(
-                          fontSize: 17,
-                          color: Colors.grey,
+                  // SizedBox(height: 2.0,),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          '\$${model.price}',
+                          style: const TextStyle(
+                            fontSize: 17,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        cubit.ChangeProductColor(model.id);
-                      },
-                      child: Icon(
-                        FontAwesomeIcons.heart,
-                        color: cubit.allData[cubit.findColor(model.id)].color,
+                      InkWell(
+                        onTap: () {
+                          cubit.ChangeProductColor(model.id);
+                        },
+                        child: Icon(
+                          FontAwesomeIcons.heart,
+                          color: cubit.allData[cubit.findColor(model.id)].color,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        const SizedBox(
-          width: 15.0,
-        ),
-      ],
+          const SizedBox(
+            width: 15.0,
+          ),
+        ],
+      ),
     ),
   );
-  ;
+
+}
+
+Widget ProductComments(CommentsInfo commentData) {
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: ListTile(
+      title: Text(
+        commentData.name,
+        style: const TextStyle(fontSize: 20, color: Colors.black),
+      ),
+      leading: CircleAvatar(
+        child: ClipOval(
+          child: Image.network(
+            "https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-male-3-512.png",
+            width: 90,
+            height: 90,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+      subtitle: Text(commentData.comment,
+          style: const TextStyle(
+              color: Color.fromRGBO(113, 113, 158, 0.5843137254901961))),
+      trailing: Text(
+        ActualTime(),
+        style: const TextStyle(color: Colors.deepOrange),
+      ),
+    ),
+  );
+}
+
+String ActualTime() {
+  return DateFormat('dd/MM/yyyy \nkk:mm').format(DateTime.now());
 }

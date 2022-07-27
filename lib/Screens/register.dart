@@ -133,9 +133,6 @@ class RegisterScreen extends StatelessWidget {
                       onPressed: () {
                         // UsersDatabase.deleteAllData();
                         // UsersDatabase.getData(UsersDatabase.database);
-                        print(cubit.users[0].mail);
-                        print(cubit.users[1].mail);
-                        print(cubit.users[2].mail);
 
                         if (!UsersDatabase.isFoundInDatabase(
                             name: NameController.value.text,
@@ -198,11 +195,7 @@ class RegisterScreen extends StatelessWidget {
                     ),
                     const Text("Already have an account ? "),
                     FlatButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
+                        onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
                         },
                         child: const Text(
                           "Sign in",

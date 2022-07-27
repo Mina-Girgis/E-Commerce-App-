@@ -64,9 +64,6 @@ class _AllScreenState extends State<AllScreen> {
                     onTap: (){
                     cubit.productQuantity = 1;
                     Navigator.push(context,MaterialPageRoute(builder: (context) =>  ProductInfo(model: cubit.allData[index],)));
-                    setState((){
-
-                    });
                     },
                       child: ProductItem(cubit.allData[index] ,context));
                 },

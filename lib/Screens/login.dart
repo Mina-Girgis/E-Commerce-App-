@@ -1,6 +1,9 @@
 import 'package:e_commerce/Bloc/bloc_cubit.dart';
+import 'package:e_commerce/Models/usermodel.dart';
+import 'package:e_commerce/Screens/homescreen.dart';
 import 'package:e_commerce/Screens/register.dart';
 import 'package:e_commerce/Shared/Components/Network/Local/user_database.dart';
+import 'package:e_commerce/Shared/Components/Network/Local/user_fav_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,7 +35,7 @@ class LoginScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: const [
                             Text(
                               "Log in",
@@ -48,11 +51,12 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
+                    Text(""),
                     TextFormField(
                         controller: EmailController,
                         validator: (String? value) {
                           bool validEmail = RegExp(
-                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                               .hasMatch(value.toString());
                           if (value!.isEmpty || !validEmail) {
                             return "Enter your Email";
@@ -82,22 +86,25 @@ class LoginScreen extends StatelessWidget {
                         style: const TextStyle(fontSize: 20),
                         decoration: const InputDecoration(
                             label: Text(
-                          "Password",
-                          style: TextStyle(fontSize: 20),
-                        ))),
+                              "Password",
+                              style: TextStyle(fontSize: 20),
+                            ))),
                     const SizedBox(
                       height: 30,
                     ),
                     MaterialButton(
-                      onPressed: () {
+                      onPressed: () async{
                         // validData();
-                        int id = UsersDatabase.validData(
-                            password: PasswordController.text,
-                            mail: EmailController.text);
-                        if (formKey.currentState!.validate() && id != -1) {
-                          cubit.ChangeCurrentUserId(id);
-                          print(cubit.currentUserId);
+                        User user = UsersDatabase.validData(password: PasswordController.text, mail: EmailController.text);
+                        if (formKey.currentState!.validate() && user.id != -1) {
+                          cubit.ChangeCurrentUser(user);
+                          BlocCubit.currentUserID = int.parse(user.id);
                           print(" Login Successfully ");
+                          // Get Some Work From DataBase;
+                          await UserFavDatabase.getData(UserFavDatabase.database, int.parse(user.id));
+                          cubit.SetFavProducts();
+                          Navigator.push(context,MaterialPageRoute(builder: (context) => const HomeScreen()));
+
                         } else {
                           PasswordController.clear();
                           EmailController.clear();
@@ -129,7 +136,7 @@ class LoginScreen extends StatelessWidget {
                                 );
                               });
                         }
-                        // Navigator.push(context,MaterialPageRoute(builder: (context) => const SecondRoute()),
+                        // Navigator.push(context,MaterialPageRoute(builder: (context) => const SecondRoute())),
                       },
                       child: const Text(
                         "Login",
@@ -158,7 +165,8 @@ class LoginScreen extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               fontSize: 17,
                               color: Colors.deepOrange),
-                        ))
+                        )),
+
                   ],
                 ),
               ),

@@ -20,13 +20,13 @@ class UserFavDatabase {
           });
         }, onOpen: (database){
           print('UserFavDatabase is open !!');
-          getData(database,1);
+          getData(database,BlocCubit.currentUserID);
         });
   }
 
   static Future<void> getData(Database database,int id) async {
     userFavProductsID.clear();
-    database.rawQuery('SELECT * FROM userFav WHERE userId = ?' ,[id]).then((value) {
+    await database.rawQuery('SELECT * FROM userFav WHERE userId = ?' ,[id]).then((value) {
       value.forEach((element) {
         // print(int.parse(element['productId'].toString()));
         userFavProductsID.add(int.parse(element['productId'].toString()));
@@ -39,7 +39,8 @@ class UserFavDatabase {
   }
 
   static Future<void> insertDatabase({required  int userID, required int productId,}) async {
-    database.rawInsert(
+    userFavProductsID.clear();
+    await database.rawInsert(
         'INSERT INTO userFav (userId,productId) VALUES (?,?)',
         [userID,productId]).then((value) {
       // print(" userFavDatabase Record ${userFavProductsID.length} is inserted !!");
@@ -49,8 +50,8 @@ class UserFavDatabase {
     });
   }
 
-  static void deleteProductFromDatabase(int userId,  int productId) {
-    database.rawDelete('DELETE FROM userFav WHERE userId = ? AND productId = ?', [userId,productId]).then((value) {
+  static void deleteProductFromDatabase(int userId,  int productId) async{
+    await database.rawDelete('DELETE FROM userFav WHERE userId = ? AND productId = ?', [userId,productId]).then((value) {
       print(value);
       getData(database, userId);
     }).catchError((error) {
@@ -58,19 +59,12 @@ class UserFavDatabase {
     });
   }
 
-  static void deleteAllData() {
-    database.rawDelete('DELETE FROM userFav').then((value) {
+  static void deleteAllData() async{
+    await database.rawDelete('DELETE FROM userFav').then((value) {
       print('table deleted');
     }).catchError((error) {
       print(error.toString());
     });
-    // for (int i = 1; i <= userFavProductsID.length; i++) {
-    //   database.rawDelete('DELETE FROM userFav WHERE id = ? ', [i]).then((value) {
-    //     print("row with id ${i} deleted");
-    //   }).catchError((error) {
-    //     print(error.toString());
-    //   });
-    // }
     userFavProductsID.clear();
   }
 
