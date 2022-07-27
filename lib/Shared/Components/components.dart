@@ -387,7 +387,7 @@ Widget ProductComments(CommentsInfo commentData) {
           style: const TextStyle(
               color: Color.fromRGBO(113, 113, 158, 0.5843137254901961))),
       trailing: Text(
-        ActualTime(),
+        commentData.time,
         style: const TextStyle(color: Colors.deepOrange),
       ),
     ),
