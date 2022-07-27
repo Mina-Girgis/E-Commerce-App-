@@ -73,47 +73,45 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
-                  child: Expanded(
-                    child: Container(
-                      height: MediaQuery.of(context).size.height - 100,
-                      child: ListView.separated(
-                        itemCount: ProductName.text.isNotEmpty
-                            ? searchItems.length
-                            : cubit.allData.length,
-                        separatorBuilder: (BuildContext context, int index) {
-                          return const Divider(
-                            thickness: 2,
-                          );
-                        },
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            onTap: () {
-                              if (searchItems.isEmpty) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ProductInfo(
-                                            model: cubit.allData[index])));
-                              } else {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ProductInfo(
-                                            model: searchItems[index])));
-                              }
-                            },
-                            leading: CircleAvatar(
-                              backgroundColor: Colors.white,
-                              child: Image.network(ProductName.text.isNotEmpty
-                                  ? searchItems[index].image
-                                  : cubit.allData[index].image),
-                            ),
-                            title: Text(ProductName.text.isNotEmpty
-                                ? searchItems[index].title
-                                : cubit.allData[index].title),
-                          );
-                        },
-                      ),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: ListView.separated(
+                      itemCount: ProductName.text.isNotEmpty
+                          ? searchItems.length
+                          : cubit.allData.length,
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const Divider(
+                          thickness: 2,
+                        );
+                      },
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          onTap: () {
+                            if (searchItems.isEmpty) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ProductInfo(
+                                          model: cubit.allData[index])));
+                            } else {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ProductInfo(
+                                          model: searchItems[index])));
+                            }
+                          },
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            child: Image.network(ProductName.text.isNotEmpty
+                                ? searchItems[index].image
+                                : cubit.allData[index].image),
+                          ),
+                          title: Text(ProductName.text.isNotEmpty
+                              ? searchItems[index].title
+                              : cubit.allData[index].title),
+                        );
+                      },
                     ),
                   ),
                 ),

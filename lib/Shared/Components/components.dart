@@ -10,9 +10,8 @@ import 'package:intl/intl.dart';
 
 final urlImages = [
   'https://3udno63459u23yboa6366rls-wpengine.netdna-ssl.com/wp-content/uploads/2017/05/Best-Offers-In-Ecommerce.jpg',
-  'https://3udno63459u23yboa6366rls-wpengine.netdna-ssl.com/wp-content/uploads/2017/05/Best-Offers-In-Ecommerce.jpg',
-  'https://3udno63459u23yboa6366rls-wpengine.netdna-ssl.com/wp-content/uploads/2017/05/Best-Offers-In-Ecommerce.jpg',
-  'https://thumbs.dreamstime.com/b/vector-illustration-cool-new-arrival-sticker-tag-banner-megaphone-vector-illustration-new-arrival-sticker-tag-banner-169160809.jpg',
+  'https://hellosubscription.com/wp-content/uploads/2017/01/unnamed-10.gif?quality=100',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuQXsD7aynYIT69i4frs9tF2qNievx3nuzybIq2GdD3_P6OyXmtoBZWn_pOL29MSyx_KM&usqp=CAU',
   'https://thumbs.dreamstime.com/b/vector-illustration-cool-new-arrival-sticker-tag-banner-megaphone-vector-illustration-new-arrival-sticker-tag-banner-169160809.jpg',
 ];
 
@@ -112,7 +111,7 @@ Widget ProductItem(Model model, context) {
                   IconButton(
                     onPressed: () async {
                       // SEND USERID HERE TO THE FUNCTIONS
-                      cubit.ChangeProductColor(model.id);
+                      cubit.ChangeProductColor(model.id, context);
                       // UserFavDatabase.deleteAllData();
                       // await UserFavDatabase.insertDatabase(userID: 1, productId: 1);
                       // await UserFavDatabase.insertDatabase(userID: 1, productId: 2);
@@ -289,9 +288,10 @@ Widget ProductCart(Model model, context) {
 Widget ProductFavourite(Model model, context) {
   var cubit = BlocCubit.get(context);
   return InkWell(
-    onTap: (){
-      cubit.productQuantity=1;
-      Navigator.push(context,MaterialPageRoute(builder: (context) =>  ProductInfo(model:model)));
+    onTap: () {
+      cubit.productQuantity = 1;
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => ProductInfo(model: model)));
     },
     child: Padding(
       padding: const EdgeInsets.all(20.0),
@@ -342,7 +342,7 @@ Widget ProductFavourite(Model model, context) {
                       ),
                       InkWell(
                         onTap: () {
-                          cubit.ChangeProductColor(model.id);
+                          cubit.ChangeProductColor(model.id, context);
                         },
                         child: Icon(
                           FontAwesomeIcons.heart,
@@ -362,7 +362,6 @@ Widget ProductFavourite(Model model, context) {
       ),
     ),
   );
-
 }
 
 Widget ProductComments(CommentsInfo commentData) {
@@ -375,8 +374,8 @@ Widget ProductComments(CommentsInfo commentData) {
       ),
       leading: CircleAvatar(
         child: ClipOval(
-          child: Image.network(
-            "https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-male-3-512.png",
+          child: Image.asset(
+            "assets/images/avatar.jpg",
             width: 90,
             height: 90,
             fit: BoxFit.cover,
@@ -387,7 +386,7 @@ Widget ProductComments(CommentsInfo commentData) {
           style: const TextStyle(
               color: Color.fromRGBO(113, 113, 158, 0.5843137254901961))),
       trailing: Text(
-        ActualTime(),
+        commentData.time,
         style: const TextStyle(color: Colors.deepOrange),
       ),
     ),
@@ -396,4 +395,35 @@ Widget ProductComments(CommentsInfo commentData) {
 
 String ActualTime() {
   return DateFormat('dd/MM/yyyy \nkk:mm').format(DateTime.now());
+}
+
+Future<dynamic> ShowDialogMessage(
+    String text1, String text2, String text3, context) {
+  return showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          title: Text(text1),
+          content: Text(text2),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+              child: Container(
+                color: Colors.transparent,
+                padding: const EdgeInsets.all(14),
+                child: Text(text3),
+              ),
+            ),
+          ],
+        );
+      });
+}
+
+void SnackbarMessage(context, String text) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(text),
+    duration: const Duration(milliseconds: 1000),
+  ));
 }

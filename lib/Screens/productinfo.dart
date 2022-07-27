@@ -1,5 +1,7 @@
 import 'package:e_commerce/Bloc/bloc_cubit.dart';
 import 'package:e_commerce/Models/productmodel.dart';
+import 'package:e_commerce/Shared/Components/Network/Local/comments_database.dart';
+import 'package:e_commerce/Shared/Components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,6 +13,7 @@ class ProductInfo extends StatelessWidget {
 
   ProductInfo({Key? key, this.model}) : super(key: key);
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     var cubit = BlocCubit.get(context);
@@ -74,7 +77,7 @@ class ProductInfo extends StatelessWidget {
                           ),
                           IconButton(
                             onPressed: () {
-                              cubit.ChangeProductColor(model!.id);
+                              cubit.ChangeProductColor(model!.id, context);
                             },
                             icon: const Icon(FontAwesomeIcons.heart),
                             iconSize: 30,
@@ -161,6 +164,7 @@ class ProductInfo extends StatelessWidget {
                               m.ChangeQuantity(cubit.productQuantity);
                               cubit.AddProductInCart(m);
                             }
+                            SnackbarMessage(context, "Item Added");
                           },
                           style: ElevatedButton.styleFrom(
                               primary: Colors.deepOrange,
@@ -217,8 +221,13 @@ class ProductInfo extends StatelessWidget {
                           ),
                           TextButton(
                             onPressed: () {
-                              Navigator.push(context,MaterialPageRoute(builder: (context) =>  ShowCommentsScreen(productId: model!.id)));
-
+                              CommentsDatabase.getData(
+                                  CommentsDatabase.database, model!.id);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ShowCommentsScreen(
+                                          productId: model!.id)));
                             },
                             child: Text(
                               "Show Reviews",

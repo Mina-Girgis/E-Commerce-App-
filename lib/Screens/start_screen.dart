@@ -13,22 +13,26 @@ class StartScreen extends StatelessWidget {
         decoration: const BoxDecoration(
           image: DecorationImage(
               image: NetworkImage(
-                  "https://previews.123rf.com/images/elenavdovina/elenavdovina1701/elenavdovina170100352/70728732-background-seamless-orange-product-categories-online-store-seamless-orange-background-with-white-lin.jpg"),
+                  "https://thumbs.dreamstime.com/b/background-seamless-white-goods-category-online-store-gray-linear-icons-categories-65280732.jpg"),
               fit: BoxFit.cover),
         ),
         child: SafeArea(
             child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
-                "All that you need,\n"
-                "    All that you want,\n"
-                "           Zoba is here !",
-                style: TextStyle(fontSize: 30, color: Colors.black),
+              const Expanded(
+                flex: 1,
+                child: SizedBox(
+                  height: 20,
+                ),
               ),
-              const SizedBox(
-                height: 20,
+              const Expanded(
+                flex: 1,
+                child: Text(
+                  "ZOBA.",
+                  style: TextStyle(fontSize: 50, color: Colors.black),
+                ),
               ),
               MaterialButton(
                 onPressed: () {
@@ -39,9 +43,9 @@ class StartScreen extends StatelessWidget {
                 },
                 child: const Text(
                   "Create an account",
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                  style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
-                color: Colors.white,
+                color: Colors.deepOrange,
                 minWidth: 300,
                 height: 55,
                 shape: const ContinuousRectangleBorder(
@@ -57,13 +61,19 @@ class StartScreen extends StatelessWidget {
                 },
                 child: const Text(
                   "Sign in",
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                  style: TextStyle(fontSize: 20, color: Colors.deepOrange),
                 ),
                 color: Colors.white,
                 minWidth: 300,
                 height: 55,
                 shape: const ContinuousRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15))),
+              ),
+              const Expanded(
+                flex: 1,
+                child: SizedBox(
+                  height: 20,
+                ),
               ),
             ],
           ),

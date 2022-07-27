@@ -6,6 +6,7 @@ import 'package:e_commerce/Shared/Components/Network/Local/comments_database.dar
 import 'package:e_commerce/Shared/Components/Network/Local/user_database.dart';
 import 'package:e_commerce/Shared/Components/Network/Local/user_fav_database.dart';
 import 'package:e_commerce/Shared/Components/Network/Remote/diohelper.dart';
+import 'package:e_commerce/Shared/Components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
@@ -51,7 +52,7 @@ class BlocCubit extends Cubit<BlocState> {
     emit(SetFavProductSuccess());
   }
 
-  void ChangeProductColor(int id) {
+  void ChangeProductColor(int id, context) {
     bool inDataBase = false;
     int index = -1;
     for (int i = 0; i < IDSFromDataBase.length; i++) {
@@ -66,8 +67,11 @@ class BlocCubit extends Cubit<BlocState> {
       if (allData[i].id == id) {
         if (inDataBase) {
           UserFavDatabase.deleteProductFromDatabase(currentUserID, id);
-        } else
+          SnackbarMessage(context, "item is removed");
+        } else {
           UserFavDatabase.insertDatabase(userID: currentUserID, productId: id);
+          SnackbarMessage(context, "item is added");
+        }
         allData[i].ChangeColor();
         break;
       }
@@ -95,9 +99,8 @@ class BlocCubit extends Cubit<BlocState> {
   List<CommentsInfo> commentsData = CommentsDatabase.Comments;
   Model model = Model();
 
-
-  void ChangeCurrentUser(User user){
-    currentUser=user;
+  void ChangeCurrentUser(User user) {
+    currentUser = user;
     emit(ChangeCurrentUserSuccess());
   }
 
@@ -220,15 +223,17 @@ class BlocCubit extends Cubit<BlocState> {
     return model;
   }
 
-  int SearchInCartData(int id){
-    int start=0;
-    int end = cartData.length-1;
-    int loc =-1;
-    while(start <= end){
-      int mid = ((start+end)/2).toInt();
-      if(cartData[mid].id < id) start=mid+1;
-      else if(cartData[mid].id > id)end=mid-1;
-      else{
+  int SearchInCartData(int id) {
+    int start = 0;
+    int end = cartData.length - 1;
+    int loc = -1;
+    while (start <= end) {
+      int mid = ((start + end) / 2).toInt();
+      if (cartData[mid].id < id)
+        start = mid + 1;
+      else if (cartData[mid].id > id)
+        end = mid - 1;
+      else {
         loc = mid;
         break;
       }
@@ -236,8 +241,6 @@ class BlocCubit extends Cubit<BlocState> {
     emit(SearchInCartDataSuccess());
     return loc;
   }
-
-
 }
 /*
 
