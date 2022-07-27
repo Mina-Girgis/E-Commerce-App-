@@ -245,7 +245,6 @@ Widget ProductCart(Model model, context) {
                 // SizedBox(height: 2.0,),
                 Row(
                   children: [
-                    
                     Expanded(
                       child: Text(
                         '\$${model.price} x ${model.quantity}',
