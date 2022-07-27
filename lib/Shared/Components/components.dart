@@ -424,6 +424,6 @@ Future<dynamic> ShowDialogMessage(
 void SnackbarMessage(context, String text) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text(text),
-    duration: const Duration(milliseconds: 1000),
+    duration: const Duration(milliseconds: 200),
   ));
 }

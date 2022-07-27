@@ -76,9 +76,7 @@ class FavouriteScreen extends StatelessWidget {
                   },
                   itemCount: cubit.IDSFromDataBase.length,
                   itemBuilder: (context, index) {
-                    return ProductFavourite(
-                        cubit.getSpecificItem(cubit.IDSFromDataBase[index]),
-                        context);
+                    return ProductFavourite(cubit.getSpecificItem(cubit.IDSFromDataBase[index]), context);
                   }),
         );
       },
