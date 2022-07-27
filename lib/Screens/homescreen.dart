@@ -1,5 +1,6 @@
 import 'package:e_commerce/Bloc/bloc_cubit.dart';
 import 'package:e_commerce/Screens/cart_screen.dart';
+import 'package:e_commerce/Screens/search_screen.dart';
 import 'package:e_commerce/Shared/Components/components.dart';
 import 'package:e_commerce/categories/all.dart';
 import 'package:e_commerce/categories/electronicsscreen.dart';
@@ -66,6 +67,9 @@ class HomeScreen extends StatelessWidget {
                   Container(
                     height: 55.0,
                     child: TextFormField(
+                      onTap: (){
+                        Navigator.push(context,MaterialPageRoute(builder: (context) => SearchScreen()));
+                      },
                       style: const TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         hintText: "Search Store",

@@ -153,6 +153,7 @@ class RegisterScreen extends StatelessWidget {
                                 phoneNumber: phone,
                                 address: "");
                             print(" Login Successfully ");
+                            Navigator.pop(context);
                             // UsersDatabase.getData(UsersDatabase.database);
                           }
                         } else {
@@ -193,17 +194,17 @@ class RegisterScreen extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
-                    const Text("Already have an account ? "),
-                    FlatButton(
-                        onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
-                        },
-                        child: const Text(
-                          "Sign in",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                              color: Colors.deepOrange),
-                        ))
+                    // const Text("Already have an account ? "),
+                    // FlatButton(
+                    //     onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                    //     },
+                    //     child: const Text(
+                    //       "Sign in",
+                    //       style: TextStyle(
+                    //           fontWeight: FontWeight.bold,
+                    //           fontSize: 17,
+                    //           color: Colors.deepOrange),
+                    //     ))
                   ],
                 ),
               ),
