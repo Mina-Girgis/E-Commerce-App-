@@ -34,17 +34,23 @@ class SideBar extends StatelessWidget {
           UserAccountsDrawerHeader(
             accountName: Text(
               "${cubit.currentUser.name}",
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.deepOrange,
+              style: const TextStyle(
+                fontSize: 20,
+                color: Colors.white,
               ),
             ),
-            accountEmail:  Text(cubit.currentUser.mail),
+            accountEmail: Text(
+              cubit.currentUser.mail,
+              style: const TextStyle(
+                fontSize: 17,
+                color: Colors.white,
+              ),
+            ),
             currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.deepOrange,
+              backgroundColor: Colors.black,
               child: ClipOval(
-                child: Image.network(
-                  "https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-male-3-512.png",
+                child: Image.asset(
+                  'assets/images/avatar.jpg',
                   width: 90,
                   height: 90,
                   fit: BoxFit.cover,
@@ -55,7 +61,7 @@ class SideBar extends StatelessWidget {
             decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: NetworkImage(
-                        "https://img.freepik.com/free-vector/floral-ornamental-abstract-background_52683-30016.jpg?w=2000"),
+                        "https://media.istockphoto.com/photos/orange-grunge-concrete-wall-textured-and-background-picture-id468375926?k=20&m=468375926&s=612x612&w=0&h=jpYAQ9GFQO4iKMZVsqrrJfU7HT9-J6VvVLl5fgdhFVE="),
                     fit: BoxFit.cover)),
           ),
           SizedBox(
@@ -75,15 +81,20 @@ class SideBar extends StatelessWidget {
                     leading: Icon(
                       sideData[index].icon,
                       size: 20,
+                      color: Colors.deepOrange,
                     ),
                     title: Text(
                       sideData[index].title,
                       style: const TextStyle(fontSize: 20, color: Colors.black),
                     ),
                     onTap: () {
-                      if(index == 0){ Navigator.pop(context);}
-                      else{
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => navigation[index]));
+                      if (index == 0) {
+                        Navigator.pop(context);
+                      } else {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => navigation[index]));
                       }
                     },
                   );

@@ -1,5 +1,6 @@
 import 'package:e_commerce/Bloc/bloc_cubit.dart';
 import 'package:e_commerce/Shared/Components/Network/Local/user_database.dart';
+import 'package:e_commerce/Shared/Components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,7 +24,7 @@ class AccountSettings extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             elevation: 1.0,
-            title: Text(
+            title: const Text(
               'Settings',
               style: TextStyle(
                 color: Colors.deepOrange,
@@ -62,13 +63,10 @@ class AccountSettings extends StatelessWidget {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       CircleAvatar(
                         minRadius: 60.0,
-                        backgroundImage: NetworkImage(
-                          "https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-male-3-512.png",
-                          scale: 1.0,
-                        ),
+                        backgroundImage: AssetImage('assets/images/avatar.jpg'),
                         backgroundColor: Colors.deepOrange,
                       ),
                     ],
@@ -89,7 +87,7 @@ class AccountSettings extends StatelessWidget {
                         }
                       },
                       style: const TextStyle(fontSize: 20),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         label: Text(
                           "Name",
                           style: TextStyle(fontSize: 20),
@@ -172,58 +170,80 @@ class AccountSettings extends StatelessWidget {
                   ),
                   MaterialButton(
                     onPressed: () async {
-                      if (NameController.text.isEmpty)
-                        NameController.text = cubit.currentUser.name;
-                      if (EmailController.text.isEmpty)
-                        EmailController.text = cubit.currentUser.mail;
-                      if (PasswordController.text.isEmpty)
-                        PasswordController.text = cubit.currentUser.password;
-                      if (PhoneNumberController.text.isEmpty)
-                        PhoneNumberController.text =
-                            cubit.currentUser.phoneNumber;
-                      //*******************************
+                      if (formKey.currentState!.validate()) {
+                        if (NameController.text.isEmpty)
+                          NameController.text = cubit.currentUser.name;
+                        if (EmailController.text.isEmpty)
+                          EmailController.text = cubit.currentUser.mail;
+                        if (PasswordController.text.isEmpty)
+                          PasswordController.text = cubit.currentUser.password;
+                        if (PhoneNumberController.text.isEmpty)
+                          PhoneNumberController.text =
+                              cubit.currentUser.phoneNumber;
+                        //*******************************
 
-                      if (NameController.text != cubit.currentUser.name || EmailController.text != cubit.currentUser.mail || PasswordController.text != cubit.currentUser.password || PhoneNumberController.text != cubit.currentUser.phoneNumber)
-                      {
-                        if(PasswordController.text.length >= 7 && PhoneNumberController.text.toString()[0]=='0' && PhoneNumberController.text.toString()[1]=='1' && PhoneNumberController.text.length==11 )
-                          {
-                            if (!UsersDatabase.isFoundInDatabase(name: NameController.text, mail: EmailController.text))
-                            {
-                              UsersDatabase.updateDatabase(
+                        if (NameController.text == cubit.currentUser.name &&
+                            EmailController.text == cubit.currentUser.mail &&
+                            PasswordController.text ==
+                                cubit.currentUser.password &&
+                            PhoneNumberController.text ==
+                                cubit.currentUser.phoneNumber) {
+                          SnackbarMessage(context, "No Data Changed");
+                        } else {
+                          if (NameController.text != cubit.currentUser.name ||
+                              EmailController.text != cubit.currentUser.mail ||
+                              PasswordController.text !=
+                                  cubit.currentUser.password ||
+                              PhoneNumberController.text !=
+                                  cubit.currentUser.phoneNumber) {
+                            if (PasswordController.text.length >= 7 &&
+                                PhoneNumberController.text.toString()[0] ==
+                                    '0' &&
+                                PhoneNumberController.text.toString()[1] ==
+                                    '1' &&
+                                PhoneNumberController.text.length == 11) {
+                              if (!UsersDatabase.isFoundInDatabase(
                                   name: NameController.text,
-                                  phone: PhoneNumberController.text,
-                                  email: EmailController.text,
-                                  password: PasswordController.text,
-                                  id: int.parse(cubit.currentUser.id));
+                                  mail: EmailController.text)) {
+                                UsersDatabase.updateDatabase(
+                                    name: NameController.text,
+                                    phone: PhoneNumberController.text,
+                                    email: EmailController.text,
+                                    password: PasswordController.text,
+                                    id: int.parse(cubit.currentUser.id));
 
-                              cubit.currentUser.phoneNumber =
-                                  PhoneNumberController.text;
-                              cubit.currentUser.name = NameController.text;
-                              cubit.currentUser.password = PasswordController.text;
-                              cubit.currentUser.mail = EmailController.text;
-                              print(cubit.currentUser.mail);
-                              Navigator.pop(context);
-                              Navigator.pop(context);
-                            }
-                            else {
-                              print("Data is used by someone else");
+                                cubit.currentUser.phoneNumber =
+                                    PhoneNumberController.text;
+                                cubit.currentUser.name = NameController.text;
+                                cubit.currentUser.password =
+                                    PasswordController.text;
+                                cubit.currentUser.mail = EmailController.text;
+                                print(cubit.currentUser.mail);
+                                SnackbarMessage(context, "Data is updated");
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              } else {
+                                print("Data is used by someone else");
+                                SnackbarMessage(
+                                    context, "Email/Name is in Use");
+                              }
+                            } else {
+                              print("Invalid Data ");
+                              SnackbarMessage(context, "Invalid Data");
                             }
                           }
-                        else {
-                          print("Invalid Data ");
                         }
                       }
-
                     },
                     child: const Text(
                       "Confirm",
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                      style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
                     color: Colors.deepOrange,
                     minWidth: 200,
                     height: 55,
                     shape: const ContinuousRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15))),
+                        borderRadius: BorderRadius.all(Radius.circular(100))),
                   ),
                 ]),
               ),

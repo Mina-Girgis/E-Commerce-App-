@@ -1,6 +1,4 @@
-import 'package:e_commerce/Bloc/bloc_cubit.dart';
 import 'package:e_commerce/Models/usermodel.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite/sqflite.dart';
 
 class UsersDatabase {
@@ -13,13 +11,15 @@ class UsersDatabase {
     database = await openDatabase('users.db', version: 1,
         onCreate: (database, version) {
       print("User Database is created !!");
-      database.execute('CREATE TABLE users (id INTEGER PRIMARY KEY, name text, mail text , phoneNumber text ,password text ,address text)')
-      .then((value) {
+      database
+          .execute(
+              'CREATE TABLE users (id INTEGER PRIMARY KEY, name text, mail text , phoneNumber text ,password text ,address text)')
+          .then((value) {
         print('User TABLE IS CREATED !!');
       }).catchError((error) {
         print(error.toString());
       });
-    }, onOpen: (database){
+    }, onOpen: (database) {
       print('User Database is open !!');
       getData(database);
     });
@@ -43,10 +43,15 @@ class UsersDatabase {
     });
   }
 
-  static Future<void> insertDatabase({required String name, required String address, required String email, required String password, required String phoneNumber}) async {
+  static Future<void> insertDatabase(
+      {required String name,
+      required String address,
+      required String email,
+      required String password,
+      required String phoneNumber}) async {
     await database.rawInsert(
         'INSERT INTO users (name,address, mail ,phoneNumber ,password) VALUES ( ?,?,?,?,? )',
-        [name,address, email, phoneNumber, password]).then((value) {
+        [name, address, email, phoneNumber, password]).then((value) {
       print(" userDatabase Record $value is inserted !!");
       getData(database);
     }).catchError((error) {
@@ -54,20 +59,24 @@ class UsersDatabase {
     });
   }
 
-
-
-  static void updateDatabase({required String name, required String phone, required String email, required String password, required int id}) async{
+  static void updateDatabase(
+      {required String name,
+      required String phone,
+      required String email,
+      required String password,
+      required int id}) async {
     await database.rawUpdate(
         'update users set name = ? , phoneNumber = ?, mail = ? ,password = ? where id = ?',
-        [name,phone ,email, password, id]).then((value) {
+        [name, phone, email, password, id]).then((value) {
       print(value);
     }).catchError((error) {
       print(error.toString());
     });
   }
 
-  static void deleteDatabase(int id) async{
-    await database.rawDelete('DELETE FROM users WHERE id = ?', [id]).then((value) {
+  static void deleteDatabase(int id) async {
+    await database
+        .rawDelete('DELETE FROM users WHERE id = ?', [id]).then((value) {
       print(value);
     }).catchError((error) {
       print(error.toString());
@@ -82,7 +91,7 @@ class UsersDatabase {
   }
 
   // login
-  static User validData({required String password ,required String mail }) {
+  static User validData({required String password, required String mail}) {
     // validData for login screen
     User user = new User();
     int valid = -1;
@@ -90,17 +99,17 @@ class UsersDatabase {
       if (userData[index].password == password &&
           userData[index].mail == mail) {
         print("good");
-        user.id=userData[index].id;
-        user.mail=userData[index].mail;
-        user.name =userData[index].name;
+        user.id = userData[index].id;
+        user.mail = userData[index].mail;
+        user.name = userData[index].name;
         user.phoneNumber = userData[index].phoneNumber;
-        user.password =userData[index].password;
+        user.password = userData[index].password;
         user.mail = userData[index].mail;
         user.address = userData[index].address;
         valid = int.parse(userData[index].id);
       }
     });
-    if(valid == -1 ) {
+    if (valid == -1) {
       user.id = -1;
     }
     return user;

@@ -1,3 +1,4 @@
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:e_commerce/Bloc/bloc_cubit.dart';
 import 'package:e_commerce/Screens/cart_screen.dart';
 import 'package:e_commerce/Screens/search_screen.dart';
@@ -42,7 +43,7 @@ class HomeScreen extends StatelessWidget {
           drawer: SideBar(),
           appBar: AppBar(
             title: const Text(
-              "Zoba",
+              "Zoba.",
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 30.0,
@@ -52,65 +53,75 @@ class HomeScreen extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context) =>  CartScreen()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => CartScreen()));
                 },
                 icon: const Icon(FontAwesomeIcons.bagShopping),
               )
             ],
           ),
-          body: Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 20),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 20.0),
-                  Container(
-                    height: 55.0,
-                    child: TextFormField(
-                      onTap: (){
-                        Navigator.push(context,MaterialPageRoute(builder: (context) => SearchScreen()));
-                      },
-                      style: const TextStyle(fontSize: 18.0),
-                      decoration: InputDecoration(
-                        hintText: "Search Store",
-                        hintStyle: const TextStyle(fontSize: 18.0),
-                        prefixIcon: const Icon(
-                          Icons.search,
-                          size: 23.0,
-                          color: Colors.grey,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(9),
-                          borderSide: const BorderSide(color: Colors.red),
+          body: DoubleBackToCloseApp(
+            snackBar: const SnackBar(
+              content: Text('Tap back again to leave'),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20.0, right: 20),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20.0),
+                    Container(
+                      height: 55.0,
+                      child: TextFormField(
+                        readOnly: true,
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchScreen()));
+                        },
+                        style: const TextStyle(fontSize: 18.0),
+                        decoration: InputDecoration(
+                          hintText: "Search Store",
+                          hintStyle: const TextStyle(fontSize: 18.0),
+                          prefixIcon: const Icon(
+                            Icons.search,
+                            size: 23.0,
+                            color: Colors.grey,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(9),
+                            borderSide: const BorderSide(color: Colors.red),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 30.0),
-                  Container(
-                    height: 30.0,
-                    child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 5,
-                        separatorBuilder: (context, index) {
-                          return const SizedBox(
-                            width: 25.0,
-                          );
-                        },
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                              onTap: () {
-                                cubit.ChangeTitleIndex(index);
-                              },
-                              child: CategoriesTitle(
-                                  titles[index], index, context));
-                        }),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  screens[cubit.titleIndex],
-                ],
+                    const SizedBox(height: 30.0),
+                    Container(
+                      height: 30.0,
+                      child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 5,
+                          separatorBuilder: (context, index) {
+                            return const SizedBox(
+                              width: 25.0,
+                            );
+                          },
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                                onTap: () {
+                                  cubit.ChangeTitleIndex(index);
+                                },
+                                child: CategoriesTitle(
+                                    titles[index], index, context));
+                          }),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    screens[cubit.titleIndex],
+                  ],
+                ),
               ),
             ),
           ),
