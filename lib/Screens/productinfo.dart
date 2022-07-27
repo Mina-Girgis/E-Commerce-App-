@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'comments_screen.dart';
+
 class ProductInfo extends StatelessWidget {
   Model? model;
 
@@ -12,6 +14,7 @@ class ProductInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var cubit = BlocCubit.get(context);
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -213,9 +216,12 @@ class ProductInfo extends StatelessWidget {
                             ),
                           ),
                           TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              "Show Comments",
+                            onPressed: () {
+                              Navigator.push(context,MaterialPageRoute(builder: (context) =>  ShowCommentsScreen(productId: model!.id)));
+
+                            },
+                            child: Text(
+                              "Show Reviews",
                               style: TextStyle(
                                   fontSize: 17, color: Colors.deepOrange),
                             ),

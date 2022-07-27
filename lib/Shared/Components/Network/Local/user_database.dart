@@ -1,3 +1,4 @@
+import 'package:e_commerce/Bloc/bloc_cubit.dart';
 import 'package:e_commerce/Models/usermodel.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sqflite/sqflite.dart';
@@ -26,7 +27,7 @@ class UsersDatabase {
 
   static Future<void> getData(Database database) async {
     userData.clear();
-    database.rawQuery('SELECT * FROM users').then((value) {
+    await database.rawQuery('SELECT * FROM users').then((value) {
       value.forEach((element) {
         userData.add(User(
             name: element['name'] as String,
@@ -42,13 +43,8 @@ class UsersDatabase {
     });
   }
 
-  static Future<void> insertDatabase(
-      {required String name,
-        required String address,
-      required String email,
-      required String password,
-      required String phoneNumber}) async {
-    database.rawInsert(
+  static Future<void> insertDatabase({required String name, required String address, required String email, required String password, required String phoneNumber}) async {
+    await database.rawInsert(
         'INSERT INTO users (name,address, mail ,phoneNumber ,password) VALUES ( ?,?,?,?,? )',
         [name,address, email, phoneNumber, password]).then((value) {
       print(" userDatabase Record $value is inserted !!");
@@ -58,23 +54,20 @@ class UsersDatabase {
     });
   }
 
-  static void updateDatabase(
-      {required String name,
-       required String address,
-       required String email,
-       required String password,
-       required int id}) {
-    database.rawUpdate(
-        'update table users set name = ?,address = ?, mail = ?,password = ? where id = ?',
-        [name,address ,email, password, id]).then((value) {
+
+
+  static void updateDatabase({required String name, required String phone, required String email, required String password, required int id}) async{
+    await database.rawUpdate(
+        'update users set name = ? , phoneNumber = ?, mail = ? ,password = ? where id = ?',
+        [name,phone ,email, password, id]).then((value) {
       print(value);
     }).catchError((error) {
       print(error.toString());
     });
   }
 
-  static void deleteDatabase(int id) {
-    database.rawDelete('DELETE FROM users WHERE id = ?', [id]).then((value) {
+  static void deleteDatabase(int id) async{
+    await database.rawDelete('DELETE FROM users WHERE id = ?', [id]).then((value) {
       print(value);
     }).catchError((error) {
       print(error.toString());
@@ -88,25 +81,36 @@ class UsersDatabase {
     userData.clear();
   }
 
-  static int validData({required String password ,required String mail }) {
+  // login
+  static User validData({required String password ,required String mail }) {
     // validData for login screen
+    User user = new User();
     int valid = -1;
     List.generate(userData.length, (index) {
       if (userData[index].password == password &&
           userData[index].mail == mail) {
         print("good");
+        user.id=userData[index].id;
+        user.mail=userData[index].mail;
+        user.name =userData[index].name;
+        user.phoneNumber = userData[index].phoneNumber;
+        user.password =userData[index].password;
+        user.mail = userData[index].mail;
+        user.address = userData[index].address;
         valid = int.parse(userData[index].id);
       }
     });
-    return valid;
+    if(valid == -1 ) {
+      user.id = -1;
+    }
+    return user;
   }
 
   //register
-  static bool isFoundInDatabase(
-      {required String name, required String mail}) {
+  static bool isFoundInDatabase({required String name, required String mail}) {
     int count = 0;
     List.generate(userData.length, (index) {
-      if (userData[index].mail == mail || userData[index].name == name) {
+      if (userData[index].mail == mail && userData[index].name == name) {
         count++;
       }
     });

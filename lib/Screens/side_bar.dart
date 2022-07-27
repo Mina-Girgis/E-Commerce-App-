@@ -1,3 +1,4 @@
+import 'package:e_commerce/Bloc/bloc_cubit.dart';
 import 'package:e_commerce/Models/side_bar_data.dart';
 import 'package:e_commerce/Screens/account_settings.dart';
 import 'package:e_commerce/Screens/homescreen.dart';
@@ -12,6 +13,7 @@ class SideBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cubit = BlocCubit.get(context);
     List<SideData> sideData = [
       SideData(icon: FontAwesomeIcons.home, title: "Home"),
       SideData(icon: FontAwesomeIcons.gear, title: "Account Settings"),
@@ -30,12 +32,16 @@ class SideBar extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            accountName: const Text(
-              "Michel Magdy",
-              style: TextStyle(fontSize: 20),
+            accountName: Text(
+              "${cubit.currentUser.name}",
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.deepOrange,
+              ),
             ),
-            accountEmail: const Text("Example@gmail.com"),
+            accountEmail:  Text(cubit.currentUser.mail),
             currentAccountPicture: CircleAvatar(
+              backgroundColor: Colors.deepOrange,
               child: ClipOval(
                 child: Image.network(
                   "https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-male-3-512.png",

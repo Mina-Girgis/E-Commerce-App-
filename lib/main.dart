@@ -1,10 +1,12 @@
 import 'package:e_commerce/Screens/homescreen.dart';
+import 'package:e_commerce/Shared/Components/Network/Local/comments_database.dart';
 import 'package:e_commerce/Shared/Components/Network/Remote/diohelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'Bloc/bloc_cubit.dart';
+import 'Screens/login.dart';
 import 'Shared/Components/Network/Local/user_database.dart';
 import 'Shared/Components/Network/Local/user_fav_database.dart';
 
@@ -13,6 +15,7 @@ void main() {
   DioHelper.init();
   UsersDatabase.createDatabase();
   UserFavDatabase.createDatabase();
+  CommentsDatabase.createDatabase();
   runApp(const Myapp());
 }
 
@@ -59,6 +62,6 @@ class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return HomeScreen();
+    return LoginScreen();
   }
 }

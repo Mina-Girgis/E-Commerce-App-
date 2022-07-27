@@ -39,12 +39,12 @@ Widget CategoriesTitle(String s, int index, context) {
 
 Widget ProductItem(Model model, context) {
   var cubit = BlocCubit.get(context);
+
   return BlocConsumer<BlocCubit, BlocState>(
     listener: (context, state) {
       // TODO: implement listener
     },
     builder: (context, state) {
-      int x = 0;
       return Container(
         width: 190,
         height: 310,
@@ -288,75 +288,81 @@ Widget ProductCart(Model model, context) {
 
 Widget ProductFavourite(Model model, context) {
   var cubit = BlocCubit.get(context);
-  return Padding(
-    padding: const EdgeInsets.all(20.0),
-    child: Row(
-      children: [
-        Container(
-          width: 120.0,
-          height: 120.0,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              10.0,
-            ),
-            image: DecorationImage(
-              image: NetworkImage('${model.image}'),
-              fit: BoxFit.contain,
+  return InkWell(
+    onTap: (){
+      cubit.productQuantity=1;
+      Navigator.push(context,MaterialPageRoute(builder: (context) =>  ProductInfo(model:model)));
+    },
+    child: Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Row(
+        children: [
+          Container(
+            width: 120.0,
+            height: 120.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                10.0,
+              ),
+              image: DecorationImage(
+                image: NetworkImage('${model.image}'),
+                fit: BoxFit.contain,
+              ),
             ),
           ),
-        ),
-        SizedBox(
-          width: 20.0,
-        ),
-        Expanded(
-          child: Container(
-            height: 120.0,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Text(
-                    '${model.title}',
-                    style: const TextStyle(fontSize: 17),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
+          SizedBox(
+            width: 20.0,
+          ),
+          Expanded(
+            child: Container(
+              height: 120.0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text(
+                      '${model.title}',
+                      style: const TextStyle(fontSize: 17),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-                // SizedBox(height: 2.0,),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        '\$${model.price}',
-                        style: const TextStyle(
-                          fontSize: 17,
-                          color: Colors.grey,
+                  // SizedBox(height: 2.0,),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          '\$${model.price}',
+                          style: const TextStyle(
+                            fontSize: 17,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        cubit.ChangeProductColor(model.id);
-                      },
-                      child: Icon(
-                        FontAwesomeIcons.heart,
-                        color: cubit.allData[cubit.findColor(model.id)].color,
+                      InkWell(
+                        onTap: () {
+                          cubit.ChangeProductColor(model.id);
+                        },
+                        child: Icon(
+                          FontAwesomeIcons.heart,
+                          color: cubit.allData[cubit.findColor(model.id)].color,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        const SizedBox(
-          width: 15.0,
-        ),
-      ],
+          const SizedBox(
+            width: 15.0,
+          ),
+        ],
+      ),
     ),
   );
-  ;
+
 }
 
 Widget ProductComments(CommentsInfo commentData) {

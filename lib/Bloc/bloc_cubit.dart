@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:e_commerce/Models/comments_model.dart';
 import 'package:e_commerce/Models/productmodel.dart';
 import 'package:e_commerce/Models/usermodel.dart';
+import 'package:e_commerce/Shared/Components/Network/Local/comments_database.dart';
 import 'package:e_commerce/Shared/Components/Network/Local/user_database.dart';
 import 'package:e_commerce/Shared/Components/Network/Local/user_fav_database.dart';
 import 'package:e_commerce/Shared/Components/Network/Remote/diohelper.dart';
@@ -14,7 +16,8 @@ class BlocCubit extends Cubit<BlocState> {
   BlocCubit() : super(BlocInitial());
   static BlocCubit get(context) => BlocProvider.of(context);
   int titleIndex = 0;
-  dynamic currentUserId = 0;
+  static int currentUserID = 0;
+  User currentUser = new User();
   int productQuantity = 1;
 /********************************************/
 
@@ -34,12 +37,14 @@ class BlocCubit extends Cubit<BlocState> {
 
   void SetFavProducts() {
     // set Fav when screen opens
+    print("from setFav function length is ${IDSFromDataBase.length}");
     IDSFromDataBase.sort();
     int idIndex = 0;
     for (int i = 0; i < allData.length; i++) {
       if (idIndex >= IDSFromDataBase.length) break;
       if (allData[i].id == IDSFromDataBase[idIndex]) {
         allData[i].ChangeColor();
+        print("colorChanged");
         idIndex++;
       }
     }
@@ -60,10 +65,9 @@ class BlocCubit extends Cubit<BlocState> {
     for (int i = 0; i < allData.length; i++) {
       if (allData[i].id == id) {
         if (inDataBase) {
-          UserFavDatabase.deleteProductFromDatabase(1, id);
+          UserFavDatabase.deleteProductFromDatabase(currentUserID, id);
         } else
-          UserFavDatabase.insertDatabase(userID: 1, productId: id);
-
+          UserFavDatabase.insertDatabase(userID: currentUserID, productId: id);
         allData[i].ChangeColor();
         break;
       }
@@ -87,9 +91,15 @@ class BlocCubit extends Cubit<BlocState> {
   List<Model> jeweleryData = [];
   List<Model> electroData = [];
   List<Model> SpecificProductData = [];
+  List<Model> cartData = [];
+  List<CommentsInfo> commentsData = CommentsDatabase.Comments;
   Model model = Model();
 
-  List<Model> cartData = [];
+
+  void ChangeCurrentUser(User user){
+    currentUser=user;
+    emit(ChangeCurrentUserSuccess());
+  }
 
   void AddProductInCart(Model model) {
     cartData.add(model);
@@ -116,11 +126,6 @@ class BlocCubit extends Cubit<BlocState> {
   void ChangeTitleIndex(int index) {
     titleIndex = index;
     emit(CatTitleColor());
-  }
-
-  void ChangeCurrentUserId(int index) {
-    currentUserId = index;
-    emit(ChangeCurrentUserIdSuccess());
   }
 
   void getAll() {

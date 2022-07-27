@@ -23,9 +23,9 @@ class CommentsDatabase {
     });
   }
 
-  static Future<void> getData(Database database, int id) async {
+  static Future<void> getData(Database database, int productId) async {
     Comments.clear();
-    database.rawQuery('SELECT * FROM comments WHERE productId = ?', [id]).then(
+    await database.rawQuery('SELECT * FROM comments WHERE productId = ?', [productId]).then(
         (value) {
       value.forEach((element) {
         // print(int.parse(element['productId'].toString()));
@@ -48,7 +48,7 @@ class CommentsDatabase {
     required String title,
     required String time,
   }) async {
-    database.rawInsert(
+    await database.rawInsert(
         'INSERT INTO comments (userName,productId,title,time) VALUES (?,?,?,?)',
         [userName, productId, title, time]).then((value) {
       // print(" userFavDatabase Record ${userFavProductsID.length} is inserted !!");
@@ -69,8 +69,8 @@ class CommentsDatabase {
   //   });
   // }
 
-  static void deleteAllData() {
-    database.rawDelete('DELETE FROM comments').then((value) {
+  static void deleteAllData() async{
+    await database.rawDelete('DELETE FROM comments').then((value) {
       print('table deleted');
     }).catchError((error) {
       print(error.toString());
