@@ -63,9 +63,8 @@ class CartScreen extends StatelessWidget {
               : SafeArea(
                   child: ListView.separated(
                       separatorBuilder: (context, index) {
-                        return Padding(
-                          padding:
-                              const EdgeInsets.only(right: 10.0, left: 10.0),
+                        return const Padding(
+                          padding: EdgeInsets.only(right: 10.0, left: 10.0),
                           child: Divider(
                             color: Colors.black38,
                             thickness: 1.0,
