@@ -192,7 +192,7 @@ class ProductInfo extends StatelessWidget {
                                       cubit.ChangeProductQuantityMinus();
                                     }
                                   },
-                                  icon: Icon(
+                                  icon: const Icon(
                                     FontAwesomeIcons.minus,
                                     size: 15.0,
                                   ),
@@ -207,7 +207,7 @@ class ProductInfo extends StatelessWidget {
                                       cubit.ChangeProductQuantityPlus();
                                     }
                                   },
-                                  icon: Icon(
+                                  icon: const Icon(
                                     FontAwesomeIcons.plus,
                                     size: 15.0,
                                   ),
