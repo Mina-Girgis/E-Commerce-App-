@@ -90,11 +90,14 @@ class SideBar extends StatelessWidget {
                     onTap: () {
                       if (index == 0) {
                         Navigator.pop(context);
-                      } else {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => navigation[index]));
+                      }
+                      else if (index == 3){
+                        BlocCubit.currentUserID = -1;
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => navigation[index]));
+                        Navigator.pop(context);
+                      }
+                      else {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => navigation[index]));
                       }
                     },
                   );

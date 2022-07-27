@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce/Models/comments_model.dart';
+import 'package:e_commerce/Models/order_model.dart';
 import 'package:e_commerce/Models/productmodel.dart';
 import 'package:e_commerce/Models/usermodel.dart';
 import 'package:e_commerce/Shared/Components/Network/Local/comments_database.dart';
+import 'package:e_commerce/Shared/Components/Network/Local/orders_database.dart';
 import 'package:e_commerce/Shared/Components/Network/Local/user_database.dart';
 import 'package:e_commerce/Shared/Components/Network/Local/user_fav_database.dart';
 import 'package:e_commerce/Shared/Components/Network/Remote/diohelper.dart';
@@ -98,6 +100,12 @@ class BlocCubit extends Cubit<BlocState> {
   List<Model> cartData = [];
   List<CommentsInfo> commentsData = CommentsDatabase.Comments;
   Model model = Model();
+
+
+  Map< String,List<ProductAndQuantity>>mapOfOrders =OrdersDatabase.mp;
+  List<String>orderIds = OrdersDatabase.orderIds;
+
+
 
   void ChangeCurrentUser(User user) {
     currentUser = user;

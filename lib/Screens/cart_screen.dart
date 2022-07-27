@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:e_commerce/Bloc/bloc_cubit.dart';
+import 'package:e_commerce/Shared/Components/Network/Local/orders_database.dart';
 import 'package:e_commerce/Shared/Components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +18,22 @@ class CartScreen extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
+          floatingActionButton:(cubit.cartData.length!=0)? FloatingActionButton.extended(
+            onPressed: (){
+                String Time = ActualTime();
+                for(int i =0 ; i < cubit.cartData.length ; i++){
+                  OrdersDatabase.insertDatabase(
+                      userID: int.parse(cubit.currentUser.id.toString()) ,
+                      productId: int .parse(cubit.cartData[i].id.toString()),
+                      orderID: Time,
+                      quantity: int.parse(cubit.cartData[i].quantity.toString()));
+                }
+                cubit.cartData.clear();
+                SnackbarMessage(context,"Items Added");
+            },
+            label: Text(" BUY NOW "),
+            backgroundColor: Colors.deepOrange,
+          ) : FloatingActionButton.small(onPressed: (){},backgroundColor: Colors.transparent,elevation: 0.0,),
           appBar: AppBar(
             elevation: 2,
             title: const Text(
@@ -60,22 +77,31 @@ class CartScreen extends StatelessWidget {
                     ],
                   ),
                 )
-              : SafeArea(
-                  child: ListView.separated(
-                      separatorBuilder: (context, index) {
-                        return const Padding(
-                          padding: EdgeInsets.only(right: 10.0, left: 10.0),
-                          child: Divider(
-                            color: Colors.black38,
-                            thickness: 1.0,
-                          ),
-                        );
-                      },
-                      itemCount: cubit.cartData.length,
-                      itemBuilder: (context, index) {
-                        return ProductCart(cubit.cartData[index], context);
-                      }),
+              : SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      height:MediaQuery.of(context).size.height-100,
+                      child: ListView.separated(
+                          separatorBuilder: (context, index) {
+                            return const Padding(
+                              padding: EdgeInsets.only(right: 10.0, left: 10.0),
+                              child: Divider(
+                                color: Colors.black38,
+                                thickness: 1.0,
+                              ),
+                            );
+                          },
+                          itemCount: cubit.cartData.length,
+                          itemBuilder: (context, index) {
+                            return ProductCart(cubit.cartData[index], context);
+                          }),
+                    ),
+                    ElevatedButton(
+                        onPressed: (){}, child: Text("")),
+                  ],
                 ),
+              ),
         );
       },
     );
