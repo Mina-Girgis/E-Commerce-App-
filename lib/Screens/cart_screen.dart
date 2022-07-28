@@ -18,26 +18,35 @@ class CartScreen extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
-          floatingActionButton:(cubit.cartData.length!=0)? FloatingActionButton.extended(
-            onPressed: (){
-                String Time = ActualTime();
-                for(int i =0 ; i < cubit.cartData.length ; i++){
-                  OrdersDatabase.insertDatabase(
-                      userID: int.parse(cubit.currentUser.id.toString()) ,
-                      productId: int .parse(cubit.cartData[i].id.toString()),
-                      orderID: Time,
-                      quantity: int.parse(cubit.cartData[i].quantity.toString()));
-                }
-                cubit.cartData.clear();
-                OrdersDatabase.getData(OrdersDatabase.database, BlocCubit.currentUserID);
-                OrdersDatabase.getDataForBestSeller(OrdersDatabase.database);
-                cubit.totalPrice=0.0;
-                // OrdersDatabase.getDataForBestSeller(OrdersDatabase.database);
-                SnackbarMessage(context,"Items Added");
-            },
-            label: Text(" BUY NOW "),
-            backgroundColor: Colors.deepOrange,
-          ) : FloatingActionButton.small(onPressed: (){},backgroundColor: Colors.transparent,elevation: 0.0,),
+          floatingActionButton: (cubit.cartData.length != 0)
+              ? FloatingActionButton.extended(
+                  onPressed: () {
+                    String Time = ActualTimeWithoutLine();
+                    for (int i = 0; i < cubit.cartData.length; i++) {
+                      OrdersDatabase.insertDatabase(
+                          userID: int.parse(cubit.currentUser.id.toString()),
+                          productId: int.parse(cubit.cartData[i].id.toString()),
+                          orderID: Time,
+                          quantity:
+                              int.parse(cubit.cartData[i].quantity.toString()));
+                    }
+                    cubit.cartData.clear();
+                    OrdersDatabase.getData(
+                        OrdersDatabase.database, BlocCubit.currentUserID);
+                    OrdersDatabase.getDataForBestSeller(
+                        OrdersDatabase.database);
+                    cubit.totalPrice = 0.0;
+                    // OrdersDatabase.getDataForBestSeller(OrdersDatabase.database);
+                    SnackbarMessage(context, "Items Added");
+                  },
+                  label: Text(" BUY NOW "),
+                  backgroundColor: Colors.deepOrange,
+                )
+              : FloatingActionButton.small(
+                  onPressed: () {},
+                  backgroundColor: Colors.transparent,
+                  elevation: 0.0,
+                ),
           appBar: AppBar(
             elevation: 2,
             title: const Text(
@@ -46,13 +55,10 @@ class CartScreen extends StatelessWidget {
             ),
             actions: [
               Padding(
-                padding: const EdgeInsets.only(top:10.0),
+                padding: const EdgeInsets.only(top: 10.0),
                 child: Text(
-                   '${cubit.totalPrice.toStringAsFixed(3)}',
-                  style: TextStyle(
-                      color: Colors.black ,
-                    fontSize: 25.0
-                  ),
+                  '${cubit.totalPrice.toStringAsFixed(3)}',
+                  style: TextStyle(color: Colors.black, fontSize: 25.0),
                 ),
               ),
               Padding(
@@ -92,28 +98,30 @@ class CartScreen extends StatelessWidget {
                   ),
                 )
               : SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                      height:MediaQuery.of(context).size.height-100,
-                      child: ListView.separated(
-                          separatorBuilder: (context, index) {
-                            return const Padding(
-                              padding: EdgeInsets.only(right: 10.0, left: 10.0),
-                              child: Divider(
-                                color: Colors.black38,
-                                thickness: 1.0,
-                              ),
-                            );
-                          },
-                          itemCount: cubit.cartData.length,
-                          itemBuilder: (context, index) {
-                            return ProductCart(cubit.cartData[index], context);
-                          }),
-                    ),
-                  ],
+                  child: Column(
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height - 100,
+                        child: ListView.separated(
+                            separatorBuilder: (context, index) {
+                              return const Padding(
+                                padding:
+                                    EdgeInsets.only(right: 10.0, left: 10.0),
+                                child: Divider(
+                                  color: Colors.black38,
+                                  thickness: 1.0,
+                                ),
+                              );
+                            },
+                            itemCount: cubit.cartData.length,
+                            itemBuilder: (context, index) {
+                              return ProductCart(
+                                  cubit.cartData[index], context);
+                            }),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
         );
       },
     );

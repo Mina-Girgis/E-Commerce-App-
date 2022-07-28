@@ -43,7 +43,7 @@ class HomeScreen extends StatelessWidget {
           drawer: SideBar(),
           appBar: AppBar(
             title: const Text(
-              "Zoba.",
+              "M&M",
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 30.0,

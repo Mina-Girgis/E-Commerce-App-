@@ -29,16 +29,16 @@ class LoginScreen extends StatelessWidget {
               decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: NetworkImage(
-                        "https://thumbs.dreamstime.com/b/background-seamless-white-goods-category-online-store-gray-linear-icons-categories-65280732.jpg"),
+                        "https://img.freepik.com/free-vector/abstract-geometric-background-orange-yellow-tones_1095-34.jpg"),
                     fit: BoxFit.cover),
               ),
               child: SafeArea(
                   child: Padding(
-                padding: const EdgeInsets.only(left : 25.0 , right: 25.0),
+                padding: const EdgeInsets.only(left: 25.0, right: 25.0),
                 child: Form(
                   key: formKey,
                   child: Container(
-                    height: MediaQuery.of(context).size.height - 50,
+                    height: MediaQuery.of(context).size.height,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -77,7 +77,8 @@ class LoginScreen extends StatelessWidget {
                             decoration: const InputDecoration(
                               label: Text(
                                 "Email",
-                                style: TextStyle(fontSize: 20),
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.black45),
                               ),
                             )),
                         const SizedBox(
@@ -94,11 +95,14 @@ class LoginScreen extends StatelessWidget {
                               return null;
                             },
                             obscureText: true,
-                            style: const TextStyle(fontSize: 20),
+                            style: const TextStyle(
+                              fontSize: 20,
+                            ),
                             decoration: const InputDecoration(
                                 label: Text(
                               "Password",
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(
+                                  fontSize: 20, color: Colors.black45),
                             ))),
                         const SizedBox(
                           height: 30,
@@ -109,7 +113,8 @@ class LoginScreen extends StatelessWidget {
                             User user = UsersDatabase.validData(
                                 password: PasswordController.text,
                                 mail: EmailController.text);
-                            if (formKey.currentState!.validate() && user.id != -1) {
+                            if (formKey.currentState!.validate() &&
+                                user.id != -1) {
                               cubit.ChangeCurrentUser(user);
                               BlocCubit.currentUserID = int.parse(user.id);
                               print(" Login Successfully ");
@@ -117,18 +122,16 @@ class LoginScreen extends StatelessWidget {
                               await UserFavDatabase.getData(
                                   UserFavDatabase.database, int.parse(user.id));
                               cubit.SetFavProducts();
-                              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                                  HomeScreen()), (Route<dynamic> route) => false);
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (context) => HomeScreen()),
+                                  (Route<dynamic> route) => false);
                               // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
-                            }
-                            else {
+                            } else {
                               PasswordController.clear();
                               EmailController.clear();
-                              ShowDialogMessage(
-                                  "Need Help?",
-                                  "User Account not found.",
-                                  "okay",
-                                  context);
+                              ShowDialogMessage("Need Help?",
+                                  "User Account not found.", "okay", context);
                             }
                             // Navigator.push(context,MaterialPageRoute(builder: (context) => const SecondRoute())),
                           },
@@ -148,6 +151,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                         const Text("Don't have an account ? "),
                         FlatButton(
+                            color: Colors.deepOrange,
                             onPressed: () {
                               Navigator.push(
                                   context,
@@ -157,9 +161,9 @@ class LoginScreen extends StatelessWidget {
                             child: const Text(
                               "Sign up",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold,
+                                  // fontWeight: FontWeight.bold,
                                   fontSize: 17,
-                                  color: Colors.deepOrange),
+                                  color: Colors.white),
                             )),
                         // SizedBox(height: 50,),
                       ],

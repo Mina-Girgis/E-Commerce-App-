@@ -100,6 +100,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                       builder: (context) => ProductInfo(
                                           model: searchItems[index])));
                             }
+                            cubit.productQuantity = 1;
                           },
                           leading: CircleAvatar(
                             backgroundColor: Colors.white,

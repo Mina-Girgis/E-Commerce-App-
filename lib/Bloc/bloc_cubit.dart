@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce/Models/comments_model.dart';
-import 'package:e_commerce/Models/order_model.dart';
 import 'package:e_commerce/Models/productmodel.dart';
 import 'package:e_commerce/Models/usermodel.dart';
 import 'package:e_commerce/Shared/Components/Network/Local/comments_database.dart';
@@ -24,11 +23,7 @@ class BlocCubit extends Cubit<BlocState> {
   User currentUser = new User();
   int productQuantity = 1;
 
-
 /********************************************/
-
-
-
 
   List<int> IDSFromDataBase = UserFavDatabase.userFavProductsID;
   // id list from database
@@ -90,8 +85,6 @@ class BlocCubit extends Cubit<BlocState> {
 
 /**********************************************/
 
-
-
   List<User> users = UsersDatabase.userData;
   List<dynamic> _AllData = [];
   List<dynamic> _Electronics = [];
@@ -110,32 +103,41 @@ class BlocCubit extends Cubit<BlocState> {
   List<CommentsInfo> commentsData = CommentsDatabase.Comments;
   Model model = Model();
 
-  Map< String,List<ProductAndQuantity>>mapOfOrders =OrdersDatabase.mp;
-  List<String>orderIds = OrdersDatabase.orderIds;
-  List<int>topBestProduct = OrdersDatabase.topBestProduct;
+  // Order variables
+  // Map<String, List<ProductAndQuantity>> mapOfOrders = OrdersDatabase.mp;
+  // List<String> orderIds = OrdersDatabase.orderIds;
+  // /*
+  //  ""2020/18
+  //
+  //     map[2020/18]= List<ProductAndQuantity>
+  //  */
+
+  List<int> topBestProduct = OrdersDatabase.topBestProduct;
   int numberOfBestProducts = 7;
 
   double totalPrice = 0.0;
-  void AddToTotalPrice(double cost, int q){
-    totalPrice+= (cost*q);
+  void AddToTotalPrice(double cost, int q) {
+    totalPrice += (cost * q);
     emit(AddToTotalPriceSuccess());
   }
-  void RemoveFromTotalPrice(double cost, int q){
-    totalPrice-= (cost*q);
+
+  void RemoveFromTotalPrice(double cost, int q) {
+    totalPrice -= (cost * q);
     emit(RemoveFromTotalPriceSuccess());
   }
 
-  String GetUserById(int id){
-    String s="";
-      for(int i = 0 ; i < users.length;i++){
-        if(id == int.parse(users[i].id)){
-          // print("YESSS");
-          s = users[i].name;
-        }
+  String GetUserById(int id) {
+    String s = "";
+    for (int i = 0; i < users.length; i++) {
+      if (id == int.parse(users[i].id)) {
+        // print("YESSS");
+        s = users[i].name;
       }
-      // emit(GetUserNameByIdSuccess());
-      return s;
+    }
+    // emit(GetUserNameByIdSuccess());
+    return s;
   }
+
   void ChangeCurrentUser(User user) {
     currentUser = user;
     emit(ChangeCurrentUserSuccess());

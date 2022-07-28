@@ -3,7 +3,6 @@ import 'package:e_commerce/Bloc/bloc_cubit.dart';
 import 'package:e_commerce/Models/comments_model.dart';
 import 'package:e_commerce/Models/productmodel.dart';
 import 'package:e_commerce/Screens/productinfo.dart';
-import 'package:e_commerce/Shared/Components/Network/Local/user_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -366,7 +365,7 @@ Widget ProductFavourite(Model model, context) {
   );
 }
 
-Widget ProductComments(CommentsInfo commentData , context) {
+Widget ProductComments(CommentsInfo commentData, context) {
   var cubit = BlocCubit.get(context);
   String s = cubit.GetUserById(int.parse(commentData.userId));
   return Padding(
@@ -401,6 +400,10 @@ String ActualTime() {
   return DateFormat('dd/MM/yyyy \nkk:mm').format(DateTime.now());
 }
 
+String ActualTimeWithoutLine() {
+  return DateFormat('dd/MM/yyyy kk:mm').format(DateTime.now());
+}
+
 Future<dynamic> ShowDialogMessage(
     String text1, String text2, String text3, context) {
   return showDialog(
@@ -431,40 +434,3 @@ void SnackbarMessage(context, String text) {
     duration: const Duration(milliseconds: 200),
   ));
 }
-
-
-
-
-Widget Panel(){
-  return Container(
-      width: double.infinity,
-      color: Colors.deepOrange,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Row(
-          children: [
-            Text(
-              "Order Time 1",
-              style: TextStyle(
-                fontSize: 40.0,
-              ),
-            ),
-          ],
-        ),
-        (1==2) ? Padding(
-          padding: const EdgeInsets.only(left: 15.0),
-          child: Column(children: [
-            Text("- item 1 "),
-            Text("- item 1 "),
-            Text("- item 1 "),
-          ],),
-        ) : Text(""),
-
-      ],
-    ),
-  );
-}
-
