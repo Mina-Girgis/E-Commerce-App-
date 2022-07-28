@@ -92,7 +92,9 @@ class SideBar extends StatelessWidget {
                         Navigator.pop(context);
                       }
                       else if (index == 3){
+                        // logout
                         BlocCubit.currentUserID = -1;
+                        cubit.SetFavProducts();
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => navigation[index]));
                         Navigator.pop(context);
                       }

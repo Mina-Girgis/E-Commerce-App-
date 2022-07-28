@@ -4,6 +4,7 @@ import 'package:e_commerce/Bloc/bloc_cubit.dart';
 import 'package:e_commerce/Models/order_model.dart';
 import 'package:e_commerce/Models/usermodel.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:tuple/tuple.dart';
 
 class OrdersDatabase {
 
@@ -11,7 +12,8 @@ class OrdersDatabase {
   static Map<String,List<ProductAndQuantity>> mp = {};
 
   static List<String>orderIds=[];
-
+  static Map<int,int>bestSellerData={};
+  static List<int>topBestProduct=[];
   static Future<void> createDatabase() async {
     database = await openDatabase('orders.db', version: 1,
         onCreate: (database, version) {
@@ -27,7 +29,8 @@ class OrdersDatabase {
         }, onOpen: (database) {
           print('orders Database is open !!');
           // getData(database , BlocCubit.currentUserID);
-          getData(database , 1);
+          getData(database , BlocCubit.currentUserID);
+          getDataForBestSeller(database);
         });
   }
 
@@ -41,10 +44,35 @@ class OrdersDatabase {
             quantity:  int.parse(element["quantity"].toString()),
             productId: int.parse(element["productId"].toString()),
           );
+          // data for each order
           if(mp[s]?.length == null){mp[s]=[];}
           mp[s]?.add(product);
-        }
+          }
       );
+      mp.forEach((key, value) {
+        orderIds.add(key);
+      });
+      print('From orders getData function Length is : ${orderIds.length}');
+    }).catchError((error) {
+      print(error.toString());
+    });
+  }
+
+  static Future<void> getDataForBestSeller(Database database) async {
+    bestSellerData.clear();
+    topBestProduct.clear();
+    await database.rawQuery('SELECT * FROM orders ').then((value) {
+      value.forEach((element) {
+        String s = element['orderID'].toString();
+
+        // data for bestSeller
+        int productId = int.parse(element["productId"].toString());
+        if(bestSellerData[productId] == null) {bestSellerData[productId] = 0;}
+        int val = int.parse(bestSellerData[productId].toString());
+        bestSellerData[productId]=val+int.parse(element["quantity"].toString());
+      }
+      );
+      getBest7();
       mp.forEach((key, value) {
         orderIds.add(key);
       });
@@ -64,7 +92,8 @@ class OrdersDatabase {
         [userID, productId, orderID, quantity]).then((value) {
       print(" ordersDatabase Record $value is inserted !!");
       // getData(database,userID);
-      getData(database ,1);
+      // getData(database ,BlocCubit.currentUserID);
+      // getDataForBestSeller(database);
     }).catchError((error) {
       print(error.toString());
     });
@@ -77,6 +106,19 @@ class OrdersDatabase {
       print(value);
     }).catchError((error) {
       print(error.toString());
+    });
+  }
+
+
+  static void getBest7(){
+    List<Tuple2<int,int>> myList =[];
+    bestSellerData.forEach((key, value) {
+      myList.add(Tuple2(value, key));
+    });
+    myList = myList..sort((a, b) => b.item1.compareTo(a.item1));
+
+    myList.forEach((element) {
+      topBestProduct.add(element.item2);
     });
   }
 

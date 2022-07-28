@@ -29,6 +29,9 @@ class CartScreen extends StatelessWidget {
                       quantity: int.parse(cubit.cartData[i].quantity.toString()));
                 }
                 cubit.cartData.clear();
+                OrdersDatabase.getData(OrdersDatabase.database, BlocCubit.currentUserID);
+                OrdersDatabase.getDataForBestSeller(OrdersDatabase.database);
+                // OrdersDatabase.getDataForBestSeller(OrdersDatabase.database);
                 SnackbarMessage(context,"Items Added");
             },
             label: Text(" BUY NOW "),
@@ -97,8 +100,6 @@ class CartScreen extends StatelessWidget {
                             return ProductCart(cubit.cartData[index], context);
                           }),
                     ),
-                    ElevatedButton(
-                        onPressed: (){}, child: Text("")),
                   ],
                 ),
               ),
