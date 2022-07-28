@@ -3,6 +3,7 @@ import 'package:e_commerce/Bloc/bloc_cubit.dart';
 import 'package:e_commerce/Models/comments_model.dart';
 import 'package:e_commerce/Models/productmodel.dart';
 import 'package:e_commerce/Screens/productinfo.dart';
+import 'package:e_commerce/Shared/Components/Network/Local/user_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -262,6 +263,7 @@ Widget ProductCart(Model model, context) {
                             int index = cubit.SearchInCartData(model.id);
                             cubit.cartData.removeAt(index);
                           }
+                          cubit.RemoveFromTotalPrice(model.price, 1);
                         },
                         icon: Icon(FontAwesomeIcons.minus))
                   ],
@@ -364,12 +366,14 @@ Widget ProductFavourite(Model model, context) {
   );
 }
 
-Widget ProductComments(CommentsInfo commentData) {
+Widget ProductComments(CommentsInfo commentData , context) {
+  var cubit = BlocCubit.get(context);
+  String s = cubit.GetUserById(int.parse(commentData.userId));
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: ListTile(
       title: Text(
-        commentData.name,
+        (s),
         style: const TextStyle(fontSize: 20, color: Colors.black),
       ),
       leading: CircleAvatar(

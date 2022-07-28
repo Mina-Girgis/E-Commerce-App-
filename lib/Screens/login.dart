@@ -109,8 +109,7 @@ class LoginScreen extends StatelessWidget {
                             User user = UsersDatabase.validData(
                                 password: PasswordController.text,
                                 mail: EmailController.text);
-                            if (formKey.currentState!.validate() &&
-                                user.id != -1) {
+                            if (formKey.currentState!.validate() && user.id != -1) {
                               cubit.ChangeCurrentUser(user);
                               BlocCubit.currentUserID = int.parse(user.id);
                               print(" Login Successfully ");
@@ -118,16 +117,16 @@ class LoginScreen extends StatelessWidget {
                               await UserFavDatabase.getData(
                                   UserFavDatabase.database, int.parse(user.id));
                               cubit.SetFavProducts();
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const HomeScreen()));
-                            } else {
+                              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                                  HomeScreen()), (Route<dynamic> route) => false);
+                              // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+                            }
+                            else {
                               PasswordController.clear();
                               EmailController.clear();
                               ShowDialogMessage(
                                   "Need Help?",
-                                  "enter your email and password.",
+                                  "User Account not found.",
                                   "okay",
                                   context);
                             }

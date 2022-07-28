@@ -95,8 +95,10 @@ class SideBar extends StatelessWidget {
                         // logout
                         BlocCubit.currentUserID = -1;
                         cubit.SetFavProducts();
+                        cubit.totalPrice=0.0;
+                        cubit.cartData.clear();
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => navigation[index]));
-                        Navigator.pop(context);
+                        // Navigator.pop(context);
                       }
                       else {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => navigation[index]));

@@ -23,7 +23,12 @@ class BlocCubit extends Cubit<BlocState> {
 
   User currentUser = new User();
   int productQuantity = 1;
+
+
 /********************************************/
+
+
+
 
   List<int> IDSFromDataBase = UserFavDatabase.userFavProductsID;
   // id list from database
@@ -84,6 +89,9 @@ class BlocCubit extends Cubit<BlocState> {
   }
 
 /**********************************************/
+
+
+
   List<User> users = UsersDatabase.userData;
   List<dynamic> _AllData = [];
   List<dynamic> _Electronics = [];
@@ -102,13 +110,32 @@ class BlocCubit extends Cubit<BlocState> {
   List<CommentsInfo> commentsData = CommentsDatabase.Comments;
   Model model = Model();
 
-
   Map< String,List<ProductAndQuantity>>mapOfOrders =OrdersDatabase.mp;
   List<String>orderIds = OrdersDatabase.orderIds;
   List<int>topBestProduct = OrdersDatabase.topBestProduct;
   int numberOfBestProducts = 7;
 
+  double totalPrice = 0.0;
+  void AddToTotalPrice(double cost, int q){
+    totalPrice+= (cost*q);
+    emit(AddToTotalPriceSuccess());
+  }
+  void RemoveFromTotalPrice(double cost, int q){
+    totalPrice-= (cost*q);
+    emit(RemoveFromTotalPriceSuccess());
+  }
 
+  String GetUserById(int id){
+    String s="";
+      for(int i = 0 ; i < users.length;i++){
+        if(id == int.parse(users[i].id)){
+          // print("YESSS");
+          s = users[i].name;
+        }
+      }
+      // emit(GetUserNameByIdSuccess());
+      return s;
+  }
   void ChangeCurrentUser(User user) {
     currentUser = user;
     emit(ChangeCurrentUserSuccess());
@@ -252,53 +279,3 @@ class BlocCubit extends Cubit<BlocState> {
     return loc;
   }
 }
-/*
-
- void ChangeProductColor(int index){
-      allData[index].ChangeColor();
-      // int position = searchItem(index);
-      // if(position == -1){
-      //   allData[index].ChangeColor();
-      //   IDSFromDataBase.add(index+1);
-      //   print("Added");
-      // }else{
-      //   allData[index].ChangeColor();
-      //   IDSFromDataBase.removeAt(position);
-      //   print("deleted");
-      // }
-      // print(IDSFromDataBase);
-      emit(ChangeProductColorSuccess());
-    }
-
-int searchItem (int id){
-      // is the item in IDSFromDataBase or not ??
-      // return its index
-      for(int i =0 ; i < IDSFromDataBase.length;i++){
-        if(id == IDSFromDataBase[i])
-          return id;
-      }
-      return -1;
-    }
-    // not we have its id
-    // search in all data
-    // return its plase in all Data
-    int GetItemIndexInAllDataById(int id){
-      for(int i =0 ; i < allData.length ;i++){
-        if(allData[i].id==id){
-          emit(GetItemIndexInAllDataByIdSuccess());
-          return i;
-        }
-      }
-      emit(GetItemIndexInAllDataByIdFail());
-      return -1;
-    }
-
-    void ChangeAllColorsFromDatabase(){
-      for(int i = 0 ; i < IDSFromDataBase.length ; i++){
-        allData[GetItemIndexInAllDataById(IDSFromDataBase[i])].ChangeColor();
-      }
-      emit(UpdateFavFromDatabaseSuccess());
-    }
-
-
- */

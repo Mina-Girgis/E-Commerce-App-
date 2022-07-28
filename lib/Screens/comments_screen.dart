@@ -57,7 +57,7 @@ class _ShowCommentsScreenState extends State<ShowCommentsScreen> {
                       : ListView.separated(
                           itemCount: cubit.commentsData.length,
                           itemBuilder: (context, index) {
-                            return ProductComments(cubit.commentsData[cubit.commentsData.length-index-1]);
+                            return ProductComments(cubit.commentsData[cubit.commentsData.length-index-1] , context);
                           },
                           separatorBuilder: (BuildContext context, int index) {
                             return const Divider(
@@ -79,7 +79,7 @@ class _ShowCommentsScreenState extends State<ShowCommentsScreen> {
                             String title = CommentController.text.toString();
                             if (title.isNotEmpty) {
                               CommentsDatabase.insertDatabase(
-                                  userName: cubit.currentUser.name,
+                                  userId: cubit.currentUser.id,
                                   productId: this.widget.productId,
                                   title: title,
                                   time: time);

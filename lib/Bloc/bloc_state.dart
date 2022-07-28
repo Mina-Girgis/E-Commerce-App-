@@ -56,7 +56,13 @@ class SearchInCartDataSuccess extends BlocState {}
 
 class ChangeCurrentUserSuccess extends BlocState {}
 
+class GetUserNameByIdSuccess extends BlocState {}
+class GetUserNameByIdFail extends BlocState {}
 
+
+class AddToTotalPriceSuccess extends BlocState {}
+
+class RemoveFromTotalPriceSuccess extends BlocState {}
 
 
 // class UpdateFavFromDatabaseSuccess extends BlocState {}
