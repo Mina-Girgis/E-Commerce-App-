@@ -262,6 +262,7 @@ Widget ProductCart(Model model, context) {
                             int index = cubit.SearchInCartData(model.id);
                             cubit.cartData.removeAt(index);
                           }
+                          cubit.RemoveFromTotalPrice(model.price, 1);
                         },
                         icon: Icon(FontAwesomeIcons.minus))
                   ],
@@ -364,12 +365,14 @@ Widget ProductFavourite(Model model, context) {
   );
 }
 
-Widget ProductComments(CommentsInfo commentData) {
+Widget ProductComments(CommentsInfo commentData, context) {
+  var cubit = BlocCubit.get(context);
+  String s = cubit.GetUserById(int.parse(commentData.userId));
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: ListTile(
       title: Text(
-        commentData.name,
+        (s),
         style: const TextStyle(fontSize: 20, color: Colors.black),
       ),
       leading: CircleAvatar(
@@ -395,6 +398,10 @@ Widget ProductComments(CommentsInfo commentData) {
 
 String ActualTime() {
   return DateFormat('dd/MM/yyyy \nkk:mm').format(DateTime.now());
+}
+
+String ActualTimeWithoutLine() {
+  return DateFormat('dd/MM/yyyy kk:mm').format(DateTime.now());
 }
 
 Future<dynamic> ShowDialogMessage(

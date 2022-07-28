@@ -1,4 +1,5 @@
 import 'package:e_commerce/Bloc/bloc_cubit.dart';
+import 'package:e_commerce/Screens/login.dart';
 import 'package:e_commerce/Shared/Components/Network/Local/user_database.dart';
 import 'package:e_commerce/Shared/Components/components.dart';
 import 'package:flutter/material.dart';
@@ -27,16 +28,16 @@ class RegisterScreen extends StatelessWidget {
               decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: NetworkImage(
-                        "https://thumbs.dreamstime.com/b/background-seamless-white-goods-category-online-store-gray-linear-icons-categories-65280732.jpg"),
-                    fit: BoxFit.cover),
+                        "https://img.freepik.com/free-vector/abstract-geometric-background-orange-yellow-tones_1095-34.jpg"),
+                    fit: BoxFit.fill),
               ),
               child: SafeArea(
                   child: Padding(
-                padding: const EdgeInsets.only(left:25.0, right: 25.0),
+                padding: const EdgeInsets.only(left: 25.0, right: 25.0),
                 child: Form(
                   key: formKey,
                   child: Container(
-                    height: MediaQuery.of(context).size.height-50,
+                    height: MediaQuery.of(context).size.height,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -75,7 +76,7 @@ class RegisterScreen extends StatelessWidget {
                               label: Text(
                                 "Name",
                                 style: TextStyle(
-                                    fontSize: 20, color: Colors.deepOrange),
+                                    fontSize: 20, color: Colors.black45),
                               ),
                             )),
                         const SizedBox(
@@ -96,7 +97,7 @@ class RegisterScreen extends StatelessWidget {
                               label: Text(
                                 "Email",
                                 style: TextStyle(
-                                    fontSize: 20, color: Colors.deepOrange),
+                                    fontSize: 20, color: Colors.black45),
                               ),
                             )),
                         const SizedBox(
@@ -117,13 +118,14 @@ class RegisterScreen extends StatelessWidget {
                               label: Text(
                                 "Password",
                                 style: TextStyle(
-                                    fontSize: 20, color: Colors.deepOrange),
+                                    fontSize: 20, color: Colors.black45),
                               ),
                             )),
                         const SizedBox(
                           height: 30,
                         ),
                         TextFormField(
+                            keyboardType: TextInputType.number,
                             controller: PhoneNumberController,
                             validator: (String? value) {
                               if (value!.isEmpty ||
@@ -137,7 +139,9 @@ class RegisterScreen extends StatelessWidget {
                               label: Text(
                                 "Phone Number",
                                 style: TextStyle(
-                                    fontSize: 20, color: Colors.deepOrange),
+                                  fontSize: 20,
+                                  color: Colors.black45,
+                                ),
                               ),
                             )),
                         const SizedBox(
@@ -149,11 +153,13 @@ class RegisterScreen extends StatelessWidget {
                             // UsersDatabase.getData(UsersDatabase.database);
 
                             if (!UsersDatabase.isFoundInDatabase(
-                                name: NameController.value.text,
-                                mail: EmailController.value.text)) {
+                                name: NameController.value.text.toLowerCase(),
+                                mail:
+                                    EmailController.value.text.toLowerCase())) {
                               if (formKey.currentState!.validate()) {
-                                String name = NameController.text;
-                                String email = EmailController.text;
+                                String name = NameController.text.toLowerCase();
+                                String email =
+                                    EmailController.text.toLowerCase();
                                 String phone = PhoneNumberController.text;
                                 String password = PasswordController.text;
                                 print(name);
@@ -167,12 +173,18 @@ class RegisterScreen extends StatelessWidget {
                                     phoneNumber: phone,
                                     address: "");
                                 print(" Login Successfully ");
-                                Navigator.pop(context);
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginScreen()));
                                 // UsersDatabase.getData(UsersDatabase.database);
                               }
                             } else {
-                              ShowDialogMessage("Need Help?",
-                                  "Your mail or Name is in use", "okay", context);
+                              ShowDialogMessage(
+                                  "Need Help?",
+                                  "Your mail or Name is in use",
+                                  "okay",
+                                  context);
                             }
                             // Navigator.push(context,MaterialPageRoute(builder: (context) => const SecondRoute()),
                           },

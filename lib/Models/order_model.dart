@@ -1,7 +1,5 @@
-
-
-class ProductAndQuantity{
+class ProductAndQuantity {
   int productId;
   int quantity;
-  ProductAndQuantity({required this.quantity , required this.productId});
+  ProductAndQuantity({required this.quantity, required this.productId});
 }

@@ -13,8 +13,8 @@ class StartScreen extends StatelessWidget {
         decoration: const BoxDecoration(
           image: DecorationImage(
               image: NetworkImage(
-                  "https://thumbs.dreamstime.com/b/background-seamless-white-goods-category-online-store-gray-linear-icons-categories-65280732.jpg"),
-              fit: BoxFit.cover),
+                  "https://img.freepik.com/free-vector/abstract-geometric-background-orange-yellow-tones_1095-34.jpg"),
+              fit: BoxFit.fill),
         ),
         child: SafeArea(
             child: Center(
@@ -30,8 +30,22 @@ class StartScreen extends StatelessWidget {
               const Expanded(
                 flex: 1,
                 child: Text(
-                  "ZOBA.",
-                  style: TextStyle(fontSize: 50, color: Colors.black),
+                  "M&M",
+                  style: TextStyle(
+                      fontSize: 50,
+                      fontStyle: FontStyle.italic,
+                      color: Colors.black),
+                ),
+              ),
+              const Expanded(
+                flex: 1,
+                child: Text(
+                  "Global And Total.",
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.black,
+                  ),
                 ),
               ),
               MaterialButton(

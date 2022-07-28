@@ -97,15 +97,15 @@ class _AllScreenState extends State<AllScreen> {
                 separatorBuilder: (context, index) {
                   return SizedBox(width: 20,);
                 },
-                itemCount: 20,
+                itemCount: (cubit.numberOfBestProducts < cubit.topBestProduct.length)?cubit.numberOfBestProducts :cubit.topBestProduct.length,
                 itemBuilder: (context,int index) {
                   return InkWell(
                     onTap: (){
-                      Model model = cubit.getSpecificItem(cubit.allData[index].id);
+                      Model model = cubit.getSpecificItem(cubit.topBestProduct[index]);
                       print(model.title);
-
+                      Navigator.push(context,MaterialPageRoute(builder: (context) =>  ProductInfo(model: model,)));
                     },
-                    child: ProductItem(cubit.allData[index],context),
+                    child: ProductItem(cubit.getSpecificItem(cubit.topBestProduct[index]),context),
                   );
                 },
               ),

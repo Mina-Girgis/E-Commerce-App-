@@ -90,14 +90,22 @@ class SideBar extends StatelessWidget {
                     onTap: () {
                       if (index == 0) {
                         Navigator.pop(context);
-                      }
-                      else if (index == 3){
+                      } else if (index == 3) {
+                        // logout
                         BlocCubit.currentUserID = -1;
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => navigation[index]));
-                        Navigator.pop(context);
-                      }
-                      else {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => navigation[index]));
+                        cubit.SetFavProducts();
+                        cubit.totalPrice = 0.0;
+                        cubit.cartData.clear();
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => navigation[index]));
+                        // Navigator.pop(context);
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => navigation[index]));
                       }
                     },
                   );
