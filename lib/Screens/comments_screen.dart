@@ -57,7 +57,7 @@ class _ShowCommentsScreenState extends State<ShowCommentsScreen> {
                       : ListView.separated(
                           itemCount: cubit.commentsData.length,
                           itemBuilder: (context, index) {
-                            return ProductComments(cubit.commentsData[index]);
+                            return ProductComments(cubit.commentsData[cubit.commentsData.length-index-1]);
                           },
                           separatorBuilder: (BuildContext context, int index) {
                             return const Divider(

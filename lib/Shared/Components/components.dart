@@ -427,3 +427,40 @@ void SnackbarMessage(context, String text) {
     duration: const Duration(milliseconds: 200),
   ));
 }
+
+
+
+
+Widget Panel(){
+  return Container(
+      width: double.infinity,
+      color: Colors.deepOrange,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          children: [
+            Text(
+              "Order Time 1",
+              style: TextStyle(
+                fontSize: 40.0,
+              ),
+            ),
+          ],
+        ),
+        (1==2) ? Padding(
+          padding: const EdgeInsets.only(left: 15.0),
+          child: Column(children: [
+            Text("- item 1 "),
+            Text("- item 1 "),
+            Text("- item 1 "),
+          ],),
+        ) : Text(""),
+
+      ],
+    ),
+  );
+}
+

@@ -28,11 +28,12 @@ class TempScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () async {
                   String time = ActualTime();
-                  print(cubit.mapOfOrders.length);//1
-                  print(cubit.orderIds.length); // 1
+                  // OrdersDatabase.getBest7();
+                  // print(cubit.mapOfOrders.length);//1
+                  // print(cubit.orderIds.length); // 1
                   // OrdersDatabase.deleteDatabase();
                   // await OrdersDatabase.insertDatabase(
-                  //     userID: 1, productId: 1, orderID: "2020", quantity: 5);
+                  //     userID: 1, productId: 11, orderID: "2020", quantity: 100);
                   // OrdersDatabase.getData(OrdersDatabase.database, 1);
                   // print(cubit.orderIds.length);
                 },

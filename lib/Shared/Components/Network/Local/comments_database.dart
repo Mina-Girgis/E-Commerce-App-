@@ -8,36 +8,36 @@ class CommentsDatabase {
   static Future<void> createDatabase() async {
     database = await openDatabase('comments.db', version: 1,
         onCreate: (database, version) {
-      print("CommentsDatabase is created !!");
-      database
-          .execute(
+          print("CommentsDatabase is created !!");
+          database
+              .execute(
               'CREATE TABLE comments (id INTEGER PRIMARY KEY, userName text, productId INTEGER, title text,time text)')
-          .then((value) {
-        print('CommentsDatabase TABLE IS CREATED !!');
-      }).catchError((error) {
-        print(error.toString());
-      });
-    }, onOpen: (database) {
-      print('CommentsDatabase is open !!');
-      getData(database, 1);
-    });
+              .then((value) {
+            print('CommentsDatabase TABLE IS CREATED !!');
+          }).catchError((error) {
+            print(error.toString());
+          });
+        }, onOpen: (database) {
+          print('CommentsDatabase is open !!');
+          getData(database, 1);
+        });
   }
 
   static Future<void> getData(Database database, int productId) async {
     Comments.clear();
     await database.rawQuery('SELECT * FROM comments WHERE productId = ?', [productId]).then(
-        (value) {
-      value.forEach((element) {
-        // print(int.parse(element['productId'].toString()));
-        Comments.add(CommentsInfo(
-            name: element['userName'].toString(),
-            comment: element['title'].toString(),
-            image: "",
-            time: element['time'].toString()));
-      });
-      print('From comments getData function Length is : ${Comments.length}');
-      print(Comments);
-    }).catchError((error) {
+            (value) {
+          value.forEach((element) {
+            // print(int.parse(element['productId'].toString()));
+            Comments.add(CommentsInfo(
+                name: element['userName'].toString(),
+                comment: element['title'].toString(),
+                image: "",
+                time: element['time'].toString()));
+          });
+          print('From comments getData function Length is : ${Comments.length}');
+          print(Comments);
+        }).catchError((error) {
       print(error.toString());
     });
   }

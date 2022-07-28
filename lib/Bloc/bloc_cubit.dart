@@ -20,6 +20,7 @@ class BlocCubit extends Cubit<BlocState> {
   static BlocCubit get(context) => BlocProvider.of(context);
   int titleIndex = 0;
   static int currentUserID = 0;
+
   User currentUser = new User();
   int productQuantity = 1;
 /********************************************/
@@ -104,7 +105,8 @@ class BlocCubit extends Cubit<BlocState> {
 
   Map< String,List<ProductAndQuantity>>mapOfOrders =OrdersDatabase.mp;
   List<String>orderIds = OrdersDatabase.orderIds;
-
+  List<int>topBestProduct = OrdersDatabase.topBestProduct;
+  int numberOfBestProducts = 7;
 
 
   void ChangeCurrentUser(User user) {

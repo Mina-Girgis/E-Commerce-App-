@@ -156,15 +156,21 @@ class ProductInfo extends StatelessWidget {
                             Model m = Model.fromModel(model!);
                             int index = cubit.SearchInCartData(m.id);
                             if (index != -1) {
-                              int? q = cubit.cartData[index].quantity! +
-                                  cubit.productQuantity;
-                              cubit.cartData[index].ChangeQuantity(q);
+                              int? q = cubit.cartData[index].quantity! + cubit.productQuantity;
+                              if(q<=50){
+                                  cubit.cartData[index].ChangeQuantity(q);
+                                  SnackbarMessage(context, "Item Added");
+                              }else{
+                                cubit.cartData[index].ChangeQuantity(50);
+                                SnackbarMessage(context, "You have added too much !!");
+                              }
                               // ChangeQuantity();
                             } else {
                               m.ChangeQuantity(cubit.productQuantity);
                               cubit.AddProductInCart(m);
+                              SnackbarMessage(context, "Item Added");
                             }
-                            SnackbarMessage(context, "Item Added");
+
                           },
                           style: ElevatedButton.styleFrom(
                               primary: Colors.deepOrange,
@@ -207,7 +213,7 @@ class ProductInfo extends StatelessWidget {
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    if (cubit.productQuantity < 5) {
+                                    if (cubit.productQuantity < 50) {
                                       cubit.ChangeProductQuantityPlus();
                                     }
                                   },
