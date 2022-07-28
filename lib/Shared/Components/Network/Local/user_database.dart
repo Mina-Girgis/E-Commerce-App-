@@ -6,7 +6,7 @@ class UsersDatabase {
 
   static late Database database;
   static List<User> userData = [];
-
+  static List<User> Users=[];
   static Future<void> createDatabase() async {
     database = await openDatabase('users.db', version: 1,
         onCreate: (database, version) {
@@ -43,6 +43,26 @@ class UsersDatabase {
     });
   }
 
+
+  // static Future<void> getUserById(Database database , int id) async {
+  //
+  //   await database.rawQuery('SELECT * FROM users where id = ? ',[id]).then((value) {
+  //     value.forEach((element) {
+  //       user = User(
+  //           name: element['name'] as String,
+  //           id: element['id'].toString() as String,
+  //           mail: element['mail'] as String,
+  //           phoneNumber: element['phoneNumber'] as String,
+  //           address: element['address'] as String,
+  //           password: element['password'] as String);
+  //     });
+  //     // print(user.name);
+  //     // print('From users getData function Length is : ${userData.length}');
+  //   }).catchError((error) {
+  //     print(error.toString());
+  //   });
+  // }
+
   static Future<void> insertDatabase(
       {required String name,
       required String address,
@@ -58,6 +78,10 @@ class UsersDatabase {
       print(error.toString());
     });
   }
+
+
+
+
 
   static void updateDatabase(
       {required String name,

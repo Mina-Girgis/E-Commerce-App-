@@ -160,6 +160,7 @@ class ProductInfo extends StatelessWidget {
                               if(q<=50){
                                   cubit.cartData[index].ChangeQuantity(q);
                                   SnackbarMessage(context, "Item Added");
+                                  cubit.AddToTotalPrice(m.price, cubit.productQuantity);
                               }else{
                                 cubit.cartData[index].ChangeQuantity(50);
                                 SnackbarMessage(context, "You have added too much !!");
@@ -169,6 +170,7 @@ class ProductInfo extends StatelessWidget {
                               m.ChangeQuantity(cubit.productQuantity);
                               cubit.AddProductInCart(m);
                               SnackbarMessage(context, "Item Added");
+                              cubit.AddToTotalPrice(m.price,cubit.productQuantity);
                             }
 
                           },

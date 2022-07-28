@@ -31,6 +31,7 @@ class CartScreen extends StatelessWidget {
                 cubit.cartData.clear();
                 OrdersDatabase.getData(OrdersDatabase.database, BlocCubit.currentUserID);
                 OrdersDatabase.getDataForBestSeller(OrdersDatabase.database);
+                cubit.totalPrice=0.0;
                 // OrdersDatabase.getDataForBestSeller(OrdersDatabase.database);
                 SnackbarMessage(context,"Items Added");
             },
@@ -44,6 +45,16 @@ class CartScreen extends StatelessWidget {
               style: TextStyle(color: Colors.deepOrange, fontSize: 25),
             ),
             actions: [
+              Padding(
+                padding: const EdgeInsets.only(top:10.0),
+                child: Text(
+                   '${cubit.totalPrice.toStringAsFixed(3)}',
+                  style: TextStyle(
+                      color: Colors.black ,
+                    fontSize: 25.0
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Badge(

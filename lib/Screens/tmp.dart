@@ -1,5 +1,8 @@
 import 'package:e_commerce/Bloc/bloc_cubit.dart';
+import 'package:e_commerce/Shared/Components/Network/Local/comments_database.dart';
 import 'package:e_commerce/Shared/Components/Network/Local/orders_database.dart';
+import 'package:e_commerce/Shared/Components/Network/Local/user_database.dart';
+import 'package:e_commerce/Shared/Components/Network/Local/user_fav_database.dart';
 import 'package:e_commerce/Shared/Components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,6 +31,18 @@ class TempScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () async {
                   String time = ActualTime();
+                  CommentsDatabase.deleteAllData();
+                  UsersDatabase.deleteAllData();
+                  UserFavDatabase.deleteAllData();
+                  OrdersDatabase.deleteDatabase();
+                  // UsersDatabase.getUserById(UsersDatabase.database, 1);
+                  // UsersDatabase.getUserById(UsersDatabase.database, 2);
+                  // print(cubit.oldUsers);
+                  // UsersDatabase.getUserById(UsersDatabase.database, 3);
+                  // print(cubit.oldUsers);
+                  // UsersDatabase.getUserById(UsersDatabase.database, 4);
+                  // print(cubit.oldUsers);
+                  // UsersDatabase.getUserById(UsersDatabase.database, 5);
                   // OrdersDatabase.getBest7();
                   // print(cubit.mapOfOrders.length);//1
                   // print(cubit.orderIds.length); // 1

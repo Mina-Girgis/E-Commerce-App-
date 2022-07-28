@@ -101,8 +101,9 @@ class _AllScreenState extends State<AllScreen> {
                 itemBuilder: (context,int index) {
                   return InkWell(
                     onTap: (){
-                      Model model = cubit.getSpecificItem(cubit.allData[index].id);
+                      Model model = cubit.getSpecificItem(cubit.topBestProduct[index]);
                       print(model.title);
+                      Navigator.push(context,MaterialPageRoute(builder: (context) =>  ProductInfo(model: model,)));
                     },
                     child: ProductItem(cubit.getSpecificItem(cubit.topBestProduct[index]),context),
                   );

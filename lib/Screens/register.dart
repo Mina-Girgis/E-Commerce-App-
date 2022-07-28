@@ -75,7 +75,7 @@ class RegisterScreen extends StatelessWidget {
                               label: Text(
                                 "Name",
                                 style: TextStyle(
-                                    fontSize: 20, color: Colors.deepOrange),
+                                    fontSize: 20, color: Colors.grey),
                               ),
                             )),
                         const SizedBox(
@@ -96,7 +96,7 @@ class RegisterScreen extends StatelessWidget {
                               label: Text(
                                 "Email",
                                 style: TextStyle(
-                                    fontSize: 20, color: Colors.deepOrange),
+                                    fontSize: 20, color: Colors.grey),
                               ),
                             )),
                         const SizedBox(
@@ -117,13 +117,14 @@ class RegisterScreen extends StatelessWidget {
                               label: Text(
                                 "Password",
                                 style: TextStyle(
-                                    fontSize: 20, color: Colors.deepOrange),
+                                    fontSize: 20, color: Colors.grey),
                               ),
                             )),
                         const SizedBox(
                           height: 30,
                         ),
                         TextFormField(
+                          keyboardType: TextInputType.number,
                             controller: PhoneNumberController,
                             validator: (String? value) {
                               if (value!.isEmpty ||
@@ -137,7 +138,7 @@ class RegisterScreen extends StatelessWidget {
                               label: Text(
                                 "Phone Number",
                                 style: TextStyle(
-                                    fontSize: 20, color: Colors.deepOrange),
+                                    fontSize: 20, color: Colors.grey ,),
                               ),
                             )),
                         const SizedBox(

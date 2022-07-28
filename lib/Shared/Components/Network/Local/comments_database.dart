@@ -30,7 +30,7 @@ class CommentsDatabase {
           value.forEach((element) {
             // print(int.parse(element['productId'].toString()));
             Comments.add(CommentsInfo(
-                name: element['userName'].toString(),
+                userId:  element['userName'].toString() ,
                 comment: element['title'].toString(),
                 image: "",
                 time: element['time'].toString()));
@@ -43,14 +43,14 @@ class CommentsDatabase {
   }
 
   static Future<void> insertDatabase({
-    required String userName,
+    required String userId,
     required int productId,
     required String title,
     required String time,
   }) async {
     await database.rawInsert(
         'INSERT INTO comments (userName,productId,title,time) VALUES (?,?,?,?)',
-        [userName, productId, title, time]).then((value) {
+        [userId, productId, title, time]).then((value) {
       // print(" userFavDatabase Record ${userFavProductsID.length} is inserted !!");
       getData(database, productId);
     }).catchError((error) {

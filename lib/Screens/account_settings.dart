@@ -220,6 +220,7 @@ class AccountSettings extends StatelessWidget {
                                 cubit.currentUser.mail = EmailController.text;
                                 print(cubit.currentUser.mail);
                                 SnackbarMessage(context, "Data is updated");
+                                UsersDatabase.getData(UsersDatabase.database);
                                 Navigator.pop(context);
                                 Navigator.pop(context);
                               } else {
