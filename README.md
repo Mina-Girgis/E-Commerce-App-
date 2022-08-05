@@ -1,14 +1,15 @@
 
-# E_commerce
+# E_commerce App
+This Application is concerned with providing products for people to buy like the popular application Amazon.
 
-A new Flutter project.
-Using State Management (Bloc) , APIs (dio) and SQFLITE.
 
 ## Table of Contents
 
 - [Features](https://github.com/Mina-Girgis/E-Commerce-App-/blob/master/README.md#features)
+- [Tools]()
 - [Screenshots](https://github.com/Mina-Girgis/E-Commerce-App-/blob/master/README.md#screenshots)
 - [TeamMembers](https://github.com/Mina-Girgis/E-Commerce-App-/blob/master/README.md#teammembers)
+
 
 ## Features
 
@@ -26,7 +27,11 @@ Using State Management (Bloc) , APIs (dio) and SQFLITE.
 
 - Each user can add and remove products from his cart.
 
-
+## Tools
+- Dart
+- State Management (Bloc)
+- APIs (dio)
+- SQFLITE.
 ## Screenshots
 | | | 
 |:-------------------------:|:-------------------------:|
