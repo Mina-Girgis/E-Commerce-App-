@@ -1,22 +1,33 @@
+
 # E_commerce
 
 A new Flutter project.
 Using State Management (Bloc) , APIs (dio) and SQFLITE.
 
-## Getting Started
+## Table of Contents
 
-This project is a starting point for a Flutter application.
+- [Features]()
+- [Screenshots]()
+- [TeamMembers]()
 
-A few resources to get you started if this is your first Flutter project:
+## Features
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- Login/Registration.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Each user can change his profile info.
+
+- Each user can add comment for each product.
+
+- Each user can add and remove products from his favourites.
+
+- The user can search for a product.
+
+- Best Seller for products.
+
+- Each user can add and remove products from his cart.
 
 
+## Screenshots
 | | | 
 |:-------------------------:|:-------------------------:|
 |<img src="https://user-images.githubusercontent.com/85393466/183053973-0fd7f75f-05c3-4940-b253-5ca19bc9def2.png" width="300" height="600" />|  <img src="https://user-images.githubusercontent.com/85393466/183053997-e304f14d-3eb1-49d3-b227-2429dc135c15.png" width="300" height="600" />
@@ -28,8 +39,11 @@ samples, guidance on mobile development, and a full API reference.
 |<img src="https://user-images.githubusercontent.com/85393466/183054099-42984fed-b645-44ba-b223-ebe7e9d61852.png" width="300" height="600" />|<img src="https://user-images.githubusercontent.com/85393466/183054086-6301e8bb-1362-41e3-a3a2-781948b3ce95.png" width="300" height="600" />
 
 
-
-
+## TeamMembers
+| Name  | Account |
+| ------------- | ------------- |
+| Mina Girgis  |  [@Mina-Girgis](https://github.com/Mina-Girgis) |
+| Michel Magdy  |  [@Michel-Magdy09](https://github.com/Michel-Magdy09)|
 
 
 
